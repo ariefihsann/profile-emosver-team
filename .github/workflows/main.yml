@@ -1,48 +1,21 @@
-name: Deploy ke Server Kampus
-
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-      # 1. Ambil source code dari GitHub
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      # 2. Pasang SSH private key
-      - name: Setup SSH Agent
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      # 3. Upload source code ke server
-      - name: Deploy files with rsync
-        run: |
-          rsync -avz \
-            --exclude='.git/' \
-            --exclude='.env' \
-            --exclude='node_modules/' \
-            --exclude='vendor/' \
-            --exclude='storage/' \
-            -e "ssh -p 1821" \
-            ./ root@krbai.pens.ac.id:/var/www/laravel/
-
-      # 4. Perbaiki permission Laravel
       - name: Fix Laravel permissions
         run: |
           ssh -p 1821 root@krbai.pens.ac.id "
             cd /var/www/laravel &&
 
             echo '========================================'
-            echo '       PHP / WEB SERVER'
+            echo '       DETECT PHP USER'
             echo '========================================'
 
-            ps aux | grep -E 'php-fpm|apache2|apache|nginx' | grep -v grep || true
+            PHP_USER=\$(ps aux | grep '[p]hp-fpm' | awk 'NR==1 {print \$1}')
+
+            if [ -z \"\$PHP_USER\" ]; then
+              echo 'PHP-FPM user tidak terdeteksi.'
+              echo 'Menggunakan www-data sebagai fallback.'
+              PHP_USER=www-data
+            fi
+
+            echo \"PHP USER: \$PHP_USER\"
 
             echo ''
             echo '========================================'
@@ -60,15 +33,32 @@ jobs:
             echo '       FIX PERMISSION'
             echo '========================================'
 
-            chown -R www-data:www-data storage bootstrap/cache
+            chown -R \$PHP_USER:\$PHP_USER storage bootstrap/cache
             chmod -R 775 storage bootstrap/cache
 
             echo ''
             echo '========================================'
-            echo '       CLEAR LARAVEL CACHE'
+            echo '       CLEAR CACHE'
             echo '========================================'
 
             php artisan optimize:clear
+
+            echo ''
+            echo '========================================'
+            echo '       TEST WRITE'
+            echo '========================================'
+
+            TEST_FILE=\"storage/framework/views/.deploy-test\"
+
+            echo 'deployment test' > \"\$TEST_FILE\"
+
+            if [ -f \"\$TEST_FILE\" ]; then
+              echo 'SUCCESS: Laravel storage bisa ditulis'
+              rm -f \"\$TEST_FILE\"
+            else
+              echo 'ERROR: storage tidak bisa ditulis'
+              exit 1
+            fi
 
             echo ''
             echo '========================================'
@@ -82,24 +72,5 @@ jobs:
               bootstrap/cache
 
             echo ''
-            echo '========================================'
-            echo '       TEST WRITE STORAGE'
-            echo '========================================'
-
-            TEST_FILE=\"storage/framework/views/.deploy-test\"
-
-            echo 'Laravel deployment test' > \"\$TEST_FILE\"
-
-            if [ -f \"\$TEST_FILE\" ]; then
-              echo 'SUCCESS: storage/framework/views bisa ditulis'
-              rm -f \"\$TEST_FILE\"
-            else
-              echo 'ERROR: storage/framework/views TIDAK bisa ditulis'
-              exit 1
-            fi
-
-            echo ''
-            echo '========================================'
-            echo '       DEPLOY SELESAI'
-            echo '========================================'
+            echo 'DEPLOY SELESAI'
           "
