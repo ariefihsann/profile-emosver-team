@@ -2,11 +2,13 @@ name: Deploy ke Server Kampus
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -18,4 +20,10 @@ jobs:
 
       - name: Deploy Files to Server
         run: |
-          rsync -avz -e "ssh -p 1821 -o StrictHostKeyChecking=no" --exclude 'node_modules' --exclude '.git' --exclude '.github' ./ root@krbai.pens.ac.id:/var/www/html/profile-emosver-team/
+          rsync -avz \
+          -e "ssh -p 1821 -o StrictHostKeyChecking=no" \
+          --exclude '.git' \
+          --exclude '.github' \
+          --exclude 'node_modules' \
+          --exclude '.env' \
+          ./ root@krbai.pens.ac.id:/var/www/laravel/
