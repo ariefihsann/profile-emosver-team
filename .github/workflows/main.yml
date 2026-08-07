@@ -1,76 +1,111 @@
-  - name: Fix Laravel permissions
-    run: |
-      ssh -p 1821 root@krbai.pens.ac.id "
-        cd /var/www/laravel
+name: Deploy ke Server Kampus
 
-        echo '========================================'
-        echo '       DETECT PHP USER'
-        echo '========================================'
+on:
+  push:
+    branches:
+      - main
 
-        PHP_USER=\$(ps aux | grep '[p]hp-fpm' | head -1 | awk '{print \$1}')
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
 
-        if [ -z \"\$PHP_USER\" ]; then
-          PHP_USER=www-data
-        fi
+    steps:
+      # 1. Ambil source code dari GitHub
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-        echo \"PHP USER: \$PHP_USER\"
+      # 2. Pasang SSH private key
+      - name: Setup SSH Agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-        echo ''
-        echo '========================================'
-        echo '       PERMISSION SEBELUM'
-        echo '========================================'
+      # 3. Upload source code ke server
+      - name: Deploy files with rsync
+        run: |
+          rsync -avz \
+            --exclude='.git/' \
+            --exclude='.env' \
+            --exclude='node_modules/' \
+            --exclude='vendor/' \
+            --exclude='storage/' \
+            -e "ssh -p 1821" \
+            ./ root@krbai.pens.ac.id:/var/www/laravel/
 
-        stat -c '%U:%G %a %n' \
-          storage \
-          storage/framework \
-          storage/framework/views \
-          bootstrap/cache
+      # 4. Fix permission Laravel
+      - name: Fix Laravel permissions
+        run: |
+          ssh -p 1821 root@krbai.pens.ac.id "
+            cd /var/www/laravel
 
-        echo ''
-        echo '========================================'
-        echo '       FIX PERMISSION'
-        echo '========================================'
+            echo '========================================'
+            echo '       DETECT PHP USER'
+            echo '========================================'
 
-        chown -R \"\$PHP_USER:\$PHP_USER\" storage bootstrap/cache
-        chmod -R 775 storage bootstrap/cache
+            PHP_USER=\$(ps aux | grep '[p]hp-fpm' | head -1 | awk '{print \$1}')
 
-        echo ''
-        echo '========================================'
-        echo '       CLEAR LARAVEL CACHE'
-        echo '========================================'
+            if [ -z \"\$PHP_USER\" ]; then
+              PHP_USER=www-data
+            fi
 
-        php artisan optimize:clear
+            echo \"PHP USER: \$PHP_USER\"
 
-        echo ''
-        echo '========================================'
-        echo '       TEST WRITE STORAGE'
-        echo '========================================'
+            echo ''
+            echo '========================================'
+            echo '       PERMISSION SEBELUM'
+            echo '========================================'
 
-        TEST_FILE='storage/framework/views/.deploy-test'
+            stat -c '%U:%G %a %n' \
+              storage \
+              storage/framework \
+              storage/framework/views \
+              bootstrap/cache
 
-        echo 'deployment test' > \"\$TEST_FILE\"
+            echo ''
+            echo '========================================'
+            echo '       FIX PERMISSION'
+            echo '========================================'
 
-        if [ -f \"\$TEST_FILE\" ]; then
-          echo 'SUCCESS: storage/framework/views bisa ditulis'
-          rm -f \"\$TEST_FILE\"
-        else
-          echo 'ERROR: storage/framework/views TIDAK bisa ditulis'
-          exit 1
-        fi
+            chown -R \"\$PHP_USER:\$PHP_USER\" storage bootstrap/cache
+            chmod -R 775 storage bootstrap/cache
 
-        echo ''
-        echo '========================================'
-        echo '       PERMISSION SESUDAH'
-        echo '========================================'
+            echo ''
+            echo '========================================'
+            echo '       CLEAR LARAVEL CACHE'
+            echo '========================================'
 
-        stat -c '%U:%G %a %n' \
-          storage \
-          storage/framework \
-          storage/framework/views \
-          bootstrap/cache
+            php artisan optimize:clear
 
-        echo ''
-        echo '========================================'
-        echo '       DEPLOY SELESAI'
-        echo '========================================'
-      "
+            echo ''
+            echo '========================================'
+            echo '       TEST WRITE STORAGE'
+            echo '========================================'
+
+            TEST_FILE='storage/framework/views/.deploy-test'
+
+            echo 'deployment test' > \"\$TEST_FILE\"
+
+            if [ -f \"\$TEST_FILE\" ]; then
+              echo 'SUCCESS: storage/framework/views bisa ditulis'
+              rm -f \"\$TEST_FILE\"
+            else
+              echo 'ERROR: storage/framework/views TIDAK bisa ditulis'
+              exit 1
+            fi
+
+            echo ''
+            echo '========================================'
+            echo '       PERMISSION SESUDAH'
+            echo '========================================'
+
+            stat -c '%U:%G %a %n' \
+              storage \
+              storage/framework \
+              storage/framework/views \
+              bootstrap/cache
+
+            echo ''
+            echo '========================================'
+            echo '       DEPLOY SELESAI'
+            echo '========================================'
+          "
