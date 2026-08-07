@@ -11,15 +11,16 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup SSH Key
-        env:
-          SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Setup SSH Agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Add Server to Known Hosts
         run: |
           mkdir -p ~/.ssh
-          echo "$SSH_KEY" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -p 1821 -H krbai.pens.ac.id >> ~/.ssh/known_hosts
 
       - name: Deploy Files to Server
         run: |
-          rsync -avz -e "ssh -p 1821 -i ~/.ssh/id_ed25519" --exclude 'node_modules' --exclude '.git' --exclude '.github' ./ root@krbai.pens.ac.id:/var/www/html/profile-emosver-team/
+          rsync -avz -e "ssh -p 1821" --exclude 'node_modules' --exclude '.git' --exclude '.github' ./ root@krbai.pens.ac.id:/var/www/html/profile-emosver-team/
