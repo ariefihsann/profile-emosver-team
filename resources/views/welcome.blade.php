@@ -107,7 +107,7 @@
                     </div>
 
                     <h1 class="text-5xl md:text-8xl font-bold text-white leading-tight font-tech uppercase drop-shadow-2xl mb-6">
-                        We Are <br>
+                        We Aree <br>
                         The Ocean <br>
                         <span class="text-gradient">Explorers</span><span class="text-cyan-400 blink-cursor">_</span>
                     </h1>
