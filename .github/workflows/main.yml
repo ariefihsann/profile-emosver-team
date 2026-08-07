@@ -15,9 +15,11 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          # Menghapus spasi atau karakter aneh di ujung file
+          sed -i -e '$a\' ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -p 1821 krbai.pens.ac.id >> ~/.ssh/known_hosts
+          ssh-keyscan -p 1821 -H krbai.pens.ac.id >> ~/.ssh/known_hosts
 
       - name: Deploy Files to Server
         run: |
-          rsync -avz -e "ssh -p 1821 -i ~/.ssh/id_ed25519" --exclude 'node_modules' --exclude '.git' ./ root@krbai.pens.ac.id:/var/www/html/profile-emosver-team/
+          rsync -avz -e "ssh -p 1821 -i ~/.ssh/id_ed25519" --exclude 'node_modules' --exclude '.git' --exclude '.github' ./ root@krbai.pens.ac.id:/var/www/html/profile-emosver-team/
