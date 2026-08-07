@@ -10,20 +10,70 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      # 1. Ambil source code dari GitHub
+      - name: Checkout repository
         uses: actions/checkout@v4
 
+      # 2. Pasang SSH private key
       - name: Setup SSH Agent
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Deploy Files to Server
+      # 3. Upload source code ke server
+      - name: Deploy files with rsync
         run: |
           rsync -avz \
-          -e "ssh -p 1821 -o StrictHostKeyChecking=no" \
-          --exclude '.git' \
-          --exclude '.github' \
-          --exclude 'node_modules' \
-          --exclude '.env' \
-          ./ root@krbai.pens.ac.id:/var/www/laravel/
+            --exclude='.git/' \
+            --exclude='.env' \
+            --exclude='node_modules/' \
+            --exclude='vendor/' \
+            --exclude='storage/' \
+            -e "ssh -p 1821" \
+            ./ root@krbai.pens.ac.id:/var/www/laravel/
+
+      # 4. Cek permission Laravel di server
+      - name: Check server permissions
+        run: |
+          ssh -p 1821 root@krbai.pens.ac.id "
+            cd /var/www/laravel &&
+            
+            echo '========================================' &&
+            echo '        SERVER PERMISSION CHECK' &&
+            echo '========================================' &&
+            
+            echo '' &&
+            echo '=== CURRENT USER ===' &&
+            whoami &&
+            
+            echo '' &&
+            echo '=== STORAGE ===' &&
+            ls -ld storage &&
+            ls -ld storage/framework &&
+            ls -ld storage/framework/views &&
+            
+            echo '' &&
+            echo '=== STORAGE CONTENT ===' &&
+            ls -la storage/framework/views | head -20 &&
+            
+            echo '' &&
+            echo '=== BOOTSTRAP CACHE ===' &&
+            ls -ld bootstrap/cache &&
+            
+            echo '' &&
+            echo '=== WEB/PHP PROCESSES ===' &&
+            ps aux | grep -E 'php-fpm|apache|nginx' | grep -v grep || true &&
+            
+            echo '' &&
+            echo '=== STORAGE OWNERSHIP ===' &&
+            stat -c '%U:%G %a %n' \
+              storage \
+              storage/framework \
+              storage/framework/views \
+              bootstrap/cache &&
+            
+            echo '' &&
+            echo '========================================' &&
+            echo '        CHECK SELESAI' &&
+            echo '========================================'
+          "
