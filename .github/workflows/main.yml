@@ -1,0 +1,21 @@
+name: Deploy ke Server Kampus
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Deploy via SSH
+        uses: appleboy/scp-action@master
+        with:
+          host: krbai.pens.ac.id
+          username: root
+          port: 1821
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: ".,!node_modules"
+          target: "/var/www/html/profile-emosver-team"
