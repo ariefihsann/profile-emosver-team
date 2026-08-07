@@ -1,2 +1,7 @@
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /vendor/
+Disallow: /storage/
+Disallow: /api/
+
+Sitemap: https://krbai.pens.ac.id/sitemap.xml

@@ -1,15 +1,22 @@
-<div id="page-transition-curtain" class="fixed inset-0 z-[9999] bg-black pointer-events-none flex flex-col justify-end transition-all duration-700 ease-[cubic-bezier(0.65,0,0.35,1)]">
-    <div class="w-full h-1 bg-cyan-500 shadow-[0_0_15px_#06b6d4]"></div>
+<div id="page-loader" class="fixed inset-0 z-[9999] flex items-center justify-center bg-black transition-all duration-700 ease-in-out">
+    <div class="absolute inset-0 bg-black/80 backdrop-blur-2xl"></div>
+    
+    <div class="relative flex items-center justify-center">
+        <div class="w-20 h-20 border border-cyan-500/10 rounded-full"></div>
+        <div class="absolute w-20 h-20 border-2 border-t-cyan-400 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-[spin_0.8s_linear_infinite]"></div>
+        <div class="absolute">
+            <div class="w-2 h-2 bg-cyan-400 rounded-full shadow-[0_0_15px_rgba(34,211,238,0.8)] animate-pulse"></div>
+        </div>
+    </div>
 </div>
 
-<nav x-data="{ mobileOpen: false }" 
-     class="absolute top-0 left-0 w-full z-50 pointer-events-none transition-all duration-300
-            h-32 bg-gradient-to-b from-black/95 via-black/70 to-transparent backdrop-blur-[2px]">
-            <div class="flex items-center w-full px-6 py-6 md:px-12 md:py-8 pointer-events-auto">
-
+<nav x-data="{ mobileOpen: false }" class="absolute top-0 left-0 w-full z-50 pointer-events-none transition-all duration-300 h-32 bg-gradient-to-b from-black/95 via-black/70 to-transparent backdrop-blur-[2px]">
+    <div class="flex items-center w-full px-6 py-6 md:px-12 md:py-8 pointer-events-auto">
         <div class="flex items-center gap-3 cursor-pointer hover-scale-trigger" onclick="window.location.href='{{ route('home') }}'">
             <div class="bg-white p-2 rounded-full shadow-lg shadow-cyan-500/20 transition duration-300 logo-bg">
-                <img src="https://upload.wikimedia.org/wikipedia/id/4/44/Logo_PENS.png" alt="Logo PENS" class="h-8 w-auto">
+                <div class="logo-wrapper">
+                    <img src="{{ asset('img/logo.jpg') }}" class="logo-zoom" alt="Logo">
+                </div>
             </div>
             <div class="flex flex-col drop-shadow-md">
                 <span class="text-sm font-bold tracking-widest font-tech text-white leading-none logo-text transition">EMOSVER</span>
@@ -18,22 +25,20 @@
         </div>
 
         <ul class="hidden md:flex gap-10 text-sm font-medium tracking-wide items-center ml-16">
-            @foreach([['route'=>'home','label'=>'Home'], ['route'=>'about','label'=>'About Team'], ['route'=>'gallery','label'=>'Gallery'], ['route'=>'tech','label'=>'Tech Specs']] as $item)
-            
+            @foreach([['route'=>'home','label'=>'Home'], ['route'=>'about','label'=>'About Team'], ['route'=>'gallery','label'=>'Gallery'], ['route'=>'tech','label'=>'Contact']] as $item)
             <li class="relative menu-item">
                 <a href="{{ route($item['route']) }}" class="block py-2 transition-colors duration-300 {{ Route::is($item['route']) ? 'text-white' : 'text-gray-400 menu-link' }}">
                     {{ $item['label'] }}
                 </a>
-                
                 <span class="menu-line absolute bottom-0 left-0 w-full h-[2px] bg-cyan-400 transform transition-transform duration-300 origin-left {{ Route::is($item['route']) ? 'scale-x-100' : 'scale-x-0' }}"></span>
             </li>
             @endforeach
         </ul>
 
-        <button @click="mobileOpen = !mobileOpen" class="ml-auto md:hidden text-white text-2xl focus:outline-none p-2 rounded-lg border border-white/20 bg-black/30 backdrop-blur-md hover:bg-white/10 transition">
+        <!-- Di sini @click diubah menjadi x-on:click agar tidak bentrok dengan Laravel Blade -->
+        <button x-on:click="mobileOpen = !mobileOpen" class="ml-auto md:hidden text-white text-2xl focus:outline-none p-2 rounded-lg border border-white/20 bg-black/30 backdrop-blur-md hover:bg-white/10 transition">
             <i class="fa-solid" :class="mobileOpen ? 'fa-xmark' : 'fa-bars'"></i>
         </button>
-
     </div>
 
     <div x-show="mobileOpen" 
@@ -57,11 +62,11 @@
             </ul>
         </div>
     </div>
-
 </nav>
 
 <style>
-    #page-transition-curtain { height: 100%; width: 100%; top: 0; left: 0; }
+    .loader-hidden { opacity: 0 !important; visibility: hidden !important; transform: scale(1.05); }
+    .loading-active { overflow: hidden !important; }
     .menu-item:hover .menu-line { transform: scaleX(1) !important; }
     .menu-item:hover .menu-link { color: #ffffff !important; }
     .hover-scale-trigger:hover .logo-bg { transform: scale(1.1); }
@@ -70,18 +75,38 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        const curtain = document.getElementById('page-transition-curtain');
-        setTimeout(() => { curtain.style.height = '0%'; }, 100);
+        const loader = document.getElementById('page-loader');
+        const body = document.body;
 
-        const links = document.querySelectorAll('a');
+        function hideLoader() {
+            if (loader && !loader.classList.contains('loader-hidden')) {
+                loader.classList.add('loader-hidden');
+                body.classList.remove('loading-active');
+                setTimeout(() => { loader.style.display = 'none'; }, 700);
+            }
+        }
+
+        window.addEventListener('load', hideLoader);
+        setTimeout(hideLoader, 3000); 
+
+        const links = document.querySelectorAll('a, .hover-scale-trigger');
         links.forEach(link => {
             link.addEventListener('click', function(e) {
-                const targetUrl = this.href;
+                let targetUrl = this.href;
+                
+                if (!targetUrl && this.getAttribute('onclick')) {
+                    const match = this.getAttribute('onclick').match(/'([^']+)'/);
+                    if (match) targetUrl = match[1];
+                }
+
                 if (targetUrl && targetUrl.indexOf(window.location.hostname) > -1 && !targetUrl.includes('#') && this.target !== '_blank') {
                     e.preventDefault();
-                    curtain.style.top = '0';
-                    curtain.style.height = '100%';
-                    setTimeout(() => { window.location.href = targetUrl; }, 700);
+                    if(loader) {
+                        loader.classList.remove('loader-hidden');
+                        loader.style.display = 'flex'; 
+                    }
+                    body.classList.add('loading-active');
+                    setTimeout(() => { window.location.href = targetUrl; }, 600);
                 }
             });
         });

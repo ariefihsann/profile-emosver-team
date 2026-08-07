@@ -3,18 +3,20 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tech Specs - EMOSVER PENS</title>
+    <link rel="icon" href="{{ asset('img/logo.jpg') }}" type="image/jpeg">
+    <title>Contact - EMOSVER PENS</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <style>
-        body { font-family: 'Montserrat', sans-serif; background-color: #f3f4f6; }
+        /* Fullscreen Reset */
+        body { margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; background-color: #000; overflow: hidden; }
         .font-tech { font-family: 'Orbitron', sans-serif; }
+        
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -27,16 +29,39 @@
             background-size: 40px 40px;
         }
 
-        /* Radar Animation */
-        @keyframes scan {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        /* Input Autofill Fix */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus, 
+        textarea:-webkit-autofill,
+        textarea:-webkit-autofill:hover,
+        textarea:-webkit-autofill:focus {
+            -webkit-text-fill-color: #e5e7eb;
+            -webkit-box-shadow: 0 0 0px 1000px #1f2937 inset;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+
+        .logo-wrapper {
+            width: 50px;
+            height: 50px;    
+            border-radius: 50%; 
+            overflow: hidden; 
+            border: 0px solid #ccc;
+        }
+
+        .logo-zoom {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            
+ 
+            transform: scale(2); 
         }
     </style>
 </head>
-<body class="h-screen w-full flex items-center justify-center p-0 md:p-4 bg-gray-100">
+<body class="h-screen w-full">
 
-    <div class="relative w-full h-full max-w-[1920px] mx-auto bg-black md:rounded-[40px] overflow-hidden shadow-2xl group flex flex-col">
+    <div class="relative w-full h-full bg-black flex flex-col">
         
         @include('components.navbar')
         
@@ -44,168 +69,128 @@
             <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/80"></div>
         </div>
 
-        <div class="relative z-20 flex-1 overflow-y-auto no-scrollbar pt-28 pb-20 px-6 md:px-24">
+        <div class="relative z-20 flex-1 overflow-y-auto no-scrollbar pt-32 pb-20 px-6 md:px-24">
 
-            <div class="flex flex-col md:flex-row items-center justify-between mb-24">
+            <div class="flex flex-col md:flex-row items-start justify-between mb-16 gap-12 max-w-7xl mx-auto">
                 
-                <div class="text-center md:text-left mb-10 md:mb-0">
+                {{-- Bagian Kiri: Info --}}
+                <div class="text-center md:text-left w-full md:w-1/2">
                     <div class="inline-flex items-center gap-2 border border-cyan-500/30 bg-cyan-900/20 px-3 py-1 rounded mb-4">
-                        <span class="text-cyan-400 font-bold tracking-widest text-[10px] uppercase font-tech">Generation 3.5</span>
+                        <span class="text-cyan-400 font-bold tracking-widest text-[10px] uppercase font-tech">Get In Touch</span>
                     </div>
                     <h1 class="text-4xl md:text-6xl font-bold text-white font-tech uppercase drop-shadow-lg mb-4">
-                        Technical <br> <span class="text-cyan-400">Blueprint</span>
+                        Connect <br> <span class="text-cyan-400">With Us</span>
                     </h1>
-                    <p class="text-gray-400 text-sm max-w-md leading-relaxed">
-                        Spesifikasi detail sistem EMOSVER AUV. Dirancang untuk ketahanan ekstrem dan manuver presisi tinggi.
+                    <p class="text-gray-400 text-sm max-w-md leading-relaxed mb-8">
+                        Tertarik berkolaborasi riset, sponsorship, atau ingin bergabung dengan tim? Sinyal komunikasi kami selalu aktif.
                     </p>
-                </div>
 
-                <div class="relative w-64 h-64 md:w-80 md:h-80 flex items-center justify-center">
-                    <div class="absolute inset-0 border border-cyan-500/20 rounded-full"></div>
-                    <div class="absolute inset-4 border border-cyan-500/10 rounded-full border-dashed"></div>
-                    <div class="absolute w-full h-full rounded-full border-t-2 border-cyan-500/50 animate-[scan_4s_linear_infinite] shadow-[0_0_20px_rgba(34,211,238,0.2)]"></div>
-                    
-                    <div class="relative z-10 w-48 h-48 bg-cyan-900/10 rounded-full flex items-center justify-center backdrop-blur-sm border border-cyan-500/30">
-                        <i class="fa-solid fa-robot text-6xl text-cyan-400"></i>
+                    {{-- Info Kontak --}}
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4 group/info">
+                            <div class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 group-hover/info:border-cyan-500/50 group-hover/info:bg-cyan-900/20 transition duration-300">
+                                <i class="fa-solid fa-location-dot text-gray-400 group-hover/info:text-cyan-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold uppercase text-sm mb-1">Basecamp</h4>
+                                <p class="text-gray-400 text-xs leading-relaxed">
+                                    Gedung D3, Politeknik Elektronika Negeri Surabaya.<br>
+                                    Jl. Raya ITS, Sukolilo, Surabaya 60111
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4 group/info">
+                            <div class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 group-hover/info:border-cyan-500/50 group-hover/info:bg-cyan-900/20 transition duration-300">
+                                <i class="fa-solid fa-envelope text-gray-400 group-hover/info:text-cyan-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold uppercase text-sm mb-1">Email Transmission</h4>
+                                <p class="text-gray-400 text-xs">krbai@event.pens.ac.id</p>
+                                <p class="text-gray-500 text-[10px] mt-0.5">Respon dalam 1x24 jam kerja.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4 mt-8 justify-center md:justify-start">
+                             <a href="https://www.instagram.com/emosver.team/" class="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:text-white hover:bg-cyan-600 hover:border-cyan-600 transition"><i class="fa-brands fa-instagram"></i></a>
+                             <a href="https://linkedin.com/company/emosver" class="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:text-white hover:bg-blue-600 hover:border-blue-600 transition"><i class="fa-brands fa-linkedin-in"></i></a>
+                             <a href="#" class="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:text-white hover:bg-red-600 hover:border-red-600 transition"><i class="fa-brands fa-youtube"></i></a>
+                        </div>
                     </div>
-
-                    <div class="absolute -top-4 right-0 bg-black/80 border border-cyan-500/30 px-2 py-1 text-[10px] text-cyan-400 font-mono rounded">SENSORS: ACTIVE</div>
-                    <div class="absolute -bottom-4 left-0 bg-black/80 border border-cyan-500/30 px-2 py-1 text-[10px] text-cyan-400 font-mono rounded">BATTERY: 98%</div>
                 </div>
+
+                {{-- Bagian Kanan: Form --}}
+                <div class="w-full md:w-1/2 bg-white/5 border border-white/10 p-8 rounded-3xl backdrop-blur-sm relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-20 h-20 bg-cyan-500/10 blur-2xl rounded-full pointer-events-none"></div>
+                    <div class="absolute bottom-0 left-0 w-20 h-20 bg-purple-500/10 blur-2xl rounded-full pointer-events-none"></div>
+
+                    <h3 class="text-white font-tech uppercase text-xl mb-6 flex items-center gap-3">
+                        <i class="fa-regular fa-paper-plane text-cyan-400"></i> Send Message
+                    </h3>
+
+                   <form action="{{ route('contact.send') }}" method="POST" class="space-y-5">
+                            @csrf 
+                            
+                            @if(session('success'))
+                                <div class="bg-green-500/20 border border-green-500 text-green-400 p-3 rounded text-xs">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                <div class="space-y-1">
+                                    <label class="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Identity</label>
+                                    <input type="text" name="name" placeholder="Nama Lengkap" class="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-gray-200 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition text-sm placeholder-gray-600" required>
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Contact</label>
+                                    <input type="email" name="email" placeholder="Alamat Email" class="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-gray-200 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition text-sm placeholder-gray-600" required>
+                                </div>
+                            </div>
+
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Subject</label>
+                                <select name="subject" class="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-gray-200 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition text-sm cursor-pointer">
+                                    <option value="" disabled selected>Pilih Keperluan...</option>
+                                    <option value="Sponsorship & Partnership">Sponsorship & Partnership</option>
+                                    <option value="Kunjungan Lab">Kunjungan Lab / Studi Banding</option>
+                                    <option value="Open Recruitment">Open Recruitment</option>
+                                    <option value="Lainnya">Lainnya</option>
+                                </select>
+                            </div>
+
+                            <div class="space-y-1">
+                                <label class="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Transmission Data</label>
+                                <textarea name="message" rows="4" placeholder="Tulis pesan Anda di sini..." class="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-gray-200 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition text-sm placeholder-gray-600 resize-none" required></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full bg-gradient-to-r from-cyan-600 to-cyan-500 hover:from-cyan-500 hover:to-cyan-400 text-black font-bold py-3.5 rounded-lg transition transform hover:scale-[1.01] shadow-[0_0_20px_rgba(34,211,238,0.3)] uppercase tracking-widest text-xs font-tech">
+                                Initiate Transmission
+                            </button>
+                        </form>
+                </div>
+
             </div>
 
-            <div x-data="{ tab: 'mech' }" class="mb-24">
-                <div class="flex flex-wrap justify-center gap-4 mb-10 border-b border-white/10 pb-6">
-                    <button @click="tab = 'mech'" :class="tab === 'mech' ? 'bg-cyan-500 text-black font-bold' : 'bg-transparent text-gray-400 border border-gray-700 hover:border-white hover:text-white'" class="px-8 py-3 rounded-xl transition uppercase tracking-widest text-xs font-tech">
-                        Mechanical
-                    </button>
-                    <button @click="tab = 'elec'" :class="tab === 'elec' ? 'bg-yellow-500 text-black font-bold' : 'bg-transparent text-gray-400 border border-gray-700 hover:border-white hover:text-white'" class="px-8 py-3 rounded-xl transition uppercase tracking-widest text-xs font-tech">
-                        Electrical
-                    </button>
-                    <button @click="tab = 'soft'" :class="tab === 'soft' ? 'bg-purple-500 text-black font-bold' : 'bg-transparent text-gray-400 border border-gray-700 hover:border-white hover:text-white'" class="px-8 py-3 rounded-xl transition uppercase tracking-widest text-xs font-tech">
-                        Software & AI
-                    </button>
-                </div>
-
-                <div x-show="tab === 'mech'" class="grid grid-cols-1 md:grid-cols-3 gap-6 animate-[fadeIn_0.5s_ease-out]">
-                    <div class="bg-white/5 border border-white/10 p-6 rounded-2xl">
-                        <div class="text-cyan-400 text-3xl mb-2"><i class="fa-solid fa-ruler-combined"></i></div>
-                        <h3 class="text-white font-bold uppercase mb-1">Dimensions</h3>
-                        <p class="text-gray-400 text-sm">65 cm (L) x 40 cm (W) x 35 cm (H)</p>
-                    </div>
-                    <div class="bg-white/5 border border-white/10 p-6 rounded-2xl">
-                        <div class="text-cyan-400 text-3xl mb-2"><i class="fa-solid fa-weight-hanging"></i></div>
-                        <h3 class="text-white font-bold uppercase mb-1">Weight</h3>
-                        <p class="text-gray-400 text-sm">18.5 Kg (Dry Weight)</p>
-                    </div>
-                    <div class="bg-white/5 border border-white/10 p-6 rounded-2xl">
-                        <div class="text-cyan-400 text-3xl mb-2"><i class="fa-solid fa-cube"></i></div>
-                        <h3 class="text-white font-bold uppercase mb-1">Material</h3>
-                        <p class="text-gray-400 text-sm">Acrylic & Aluminum 6061 Frame</p>
-                    </div>
-                    <div class="md:col-span-3 bg-white/5 border border-white/10 p-6 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6">
-                        <div>
-                            <h3 class="text-white font-bold uppercase mb-1">Max Depth Rating</h3>
-                            <p class="text-gray-400 text-sm">Tested up to 100 meters underwater pressure.</p>
-                        </div>
-                        <div class="text-4xl font-tech text-cyan-400 font-bold">100m</div>
-                    </div>
-                </div>
-
-                <div x-show="tab === 'elec'" class="grid grid-cols-1 md:grid-cols-2 gap-6 animate-[fadeIn_0.5s_ease-out]" style="display: none;">
-                    <div class="bg-white/5 border border-yellow-500/30 p-6 rounded-2xl relative overflow-hidden">
-                        <div class="absolute top-0 right-0 p-4 opacity-20"><i class="fa-solid fa-microchip text-6xl text-yellow-500"></i></div>
-                        <h3 class="text-white font-bold uppercase mb-2">Main Computer</h3>
-                        <p class="text-yellow-400 font-mono text-lg mb-1">Nvidia Jetson Orin Nano</p>
-                        <p class="text-gray-500 text-xs">High performance AI processing unit for computer vision.</p>
-                    </div>
-                    <div class="bg-white/5 border border-yellow-500/30 p-6 rounded-2xl relative overflow-hidden">
-                        <div class="absolute top-0 right-0 p-4 opacity-20"><i class="fa-solid fa-car-battery text-6xl text-yellow-500"></i></div>
-                        <h3 class="text-white font-bold uppercase mb-2">Power Source</h3>
-                        <p class="text-yellow-400 font-mono text-lg mb-1">LiPo 4S 16000mAh</p>
-                        <p class="text-gray-500 text-xs">Dual battery configuration for 4 hours runtime.</p>
-                    </div>
-                    <div class="col-span-1 md:col-span-2 bg-white/5 border border-white/10 p-6 rounded-2xl">
-                        <h3 class="text-white font-bold uppercase mb-4">Sensor Suite</h3>
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-                            <div class="p-3 bg-black/40 rounded border border-white/5"><span class="text-gray-300 text-xs font-bold block">IMU</span><span class="text-yellow-500 text-[10px]">9-Axis</span></div>
-                            <div class="p-3 bg-black/40 rounded border border-white/5"><span class="text-gray-300 text-xs font-bold block">Depth</span><span class="text-yellow-500 text-[10px]">Bar 30</span></div>
-                            <div class="p-3 bg-black/40 rounded border border-white/5"><span class="text-gray-300 text-xs font-bold block">Camera</span><span class="text-yellow-500 text-[10px]">ZED 2i Stereo</span></div>
-                            <div class="p-3 bg-black/40 rounded border border-white/5"><span class="text-gray-300 text-xs font-bold block">DVL</span><span class="text-yellow-500 text-[10px]">Waterlinked</span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div x-show="tab === 'soft'" class="space-y-6 animate-[fadeIn_0.5s_ease-out]" style="display: none;">
-                    <div class="bg-white/5 border border-purple-500/30 p-8 rounded-2xl">
-                        <div class="flex justify-between items-end mb-4">
-                            <h3 class="text-white font-bold uppercase text-lg">AI Detection Accuracy</h3>
-                            <span class="text-purple-400 font-bold text-2xl">98%</span>
-                        </div>
-                        <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden">
-                            <div class="bg-purple-500 h-full w-[98%] shadow-[0_0_10px_#a855f7]"></div>
-                        </div>
-                        <p class="text-gray-400 text-xs mt-4">Using YOLOv8 custom trained model for underwater object recognition.</p>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="p-6 bg-black/40 border border-white/10 rounded-xl text-center">
-                            <i class="fa-brands fa-linux text-4xl text-gray-500 mb-4"></i>
-                            <h4 class="text-white font-bold">Ubuntu 20.04</h4>
-                            <p class="text-gray-500 text-xs">Operating System</p>
-                        </div>
-                        <div class="p-6 bg-black/40 border border-white/10 rounded-xl text-center">
-                            <i class="fa-solid fa-robot text-4xl text-gray-500 mb-4"></i>
-                            <h4 class="text-white font-bold">ROS 2 Humble</h4>
-                            <p class="text-gray-500 text-xs">Robot Middleware</p>
-                        </div>
-                        <div class="p-6 bg-black/40 border border-white/10 rounded-xl text-center">
-                            <i class="fa-solid fa-code-branch text-4xl text-gray-500 mb-4"></i>
-                            <h4 class="text-white font-bold">OpenCV</h4>
-                            <p class="text-gray-500 text-xs">Image Processing</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mb-24">
-                <h2 class="text-2xl text-white font-tech uppercase mb-8 border-l-4 border-cyan-400 pl-4">Hardware Deep Dive</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    
-                    <div class="flex gap-6 items-start group/item">
-                        <div class="w-24 h-24 bg-gray-800 rounded-xl overflow-hidden border border-white/10 shrink-0">
-                             <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2070" class="w-full h-full object-cover grayscale group-hover/item:grayscale-0 transition">
-                        </div>
-                        <div>
-                            <h4 class="text-white font-bold text-lg mb-1 group-hover/item:text-cyan-400 transition">BlueRobotics T200</h4>
-                            <span class="text-[10px] bg-cyan-900 text-cyan-400 px-2 py-0.5 rounded uppercase font-bold">Thruster</span>
-                            <p class="text-gray-400 text-xs mt-2 leading-relaxed">
-                                Thruster bawah air paling andal di kelasnya. Konfigurasi 8 thruster vectored memberikan gerakan 6-DOF penuh.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="flex gap-6 items-start group/item">
-                        <div class="w-24 h-24 bg-gray-800 rounded-xl overflow-hidden border border-white/10 shrink-0">
-                             <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070" class="w-full h-full object-cover grayscale group-hover/item:grayscale-0 transition">
-                        </div>
-                        <div>
-                            <h4 class="text-white font-bold text-lg mb-1 group-hover/item:text-cyan-400 transition">ZED 2i Stereo Camera</h4>
-                            <span class="text-[10px] bg-cyan-900 text-cyan-400 px-2 py-0.5 rounded uppercase font-bold">Vision</span>
-                            <p class="text-gray-400 text-xs mt-2 leading-relaxed">
-                                Kamera stereo dengan kemampuan depth sensing untuk pemetaan 3D dan deteksi jarak objek secara real-time.
-                            </p>
-                        </div>
-                    </div>
-
+            {{-- Bagian Peta --}}
+            <div class="w-full h-64 bg-gray-900 rounded-2xl overflow-hidden border border-white/10 grayscale hover:grayscale-0 transition duration-700 relative group/map max-w-7xl mx-auto">
+                {{-- Update: Saya mengganti link dummy dengan embed map PENS asli agar tidak blank --}}
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.692023533932!2d112.79155207590393!3d-7.275841771497217!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fa10ea2ae883%3A0xbe22c55d60ef0bc1!2sPoliteknik%20Elektronika%20Negeri%20Surabaya!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" 
+                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+                
+                <div class="absolute inset-0 bg-cyan-900/10 pointer-events-none group-hover/map:bg-transparent transition"></div>
+                
+                <div class="absolute bottom-4 left-4 bg-black/80 px-4 py-2 rounded border border-cyan-500/30 backdrop-blur pointer-events-none">
+                    <p class="text-cyan-400 text-[10px] font-mono">COORDINATES: -7.2758, 112.7915</p>
                 </div>
             </div>
 
             <div class="text-center border-t border-white/10 pt-8 mt-10">
-                <p class="text-gray-500 text-xs uppercase tracking-widest mb-4">Want full technical datasheet?</p>
-                <button class="px-8 py-3 rounded-full border border-gray-600 text-gray-300 font-bold text-sm hover:bg-cyan-500 hover:text-black hover:border-cyan-500 transition flex items-center justify-center gap-2 mx-auto">
-                    <i class="fa-solid fa-file-pdf"></i> Download PDF
-                </button>
+                <p class="text-gray-600 text-xs">
+                    © {{ date('Y') }} EMOSVER Team - Politeknik Elektronika Negeri Surabaya. <br class="md:hidden"> All systems operational.
+                </p>
             </div>
 
         </div>

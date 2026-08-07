@@ -3,187 +3,280 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{{ asset('img/logo.jpg') }}" type="image/jpeg">
     <title>About Team - EMOSVER PENS</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <script src="https://cdn.tailwindcss.com"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <style>
-        body { font-family: 'Montserrat', sans-serif; background-color: #f3f4f6; }
+        body { margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; background-color: #000; overflow-x: hidden; }
         .font-tech { font-family: 'Orbitron', sans-serif; }
+        
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Efek Kaca Asli - Tanpa will-change yang bikin berat */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+        }
+
+        .logo-wrapper {
+            width: 50px;
+            height: 50px;    
+            border-radius: 50%; 
+            overflow: hidden; 
+            border: 0px solid #ccc;
+        }
+
+        .logo-zoom {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            transform: scale(2); 
+        }
     </style>
 </head>
-<body class="h-screen w-full flex items-center justify-center p-0 md:p-4 bg-gray-100">
+<body class="h-screen w-full text-white">
 
-    <div class="relative w-full h-full max-w-[1920px] mx-auto bg-black md:rounded-[40px] overflow-hidden shadow-2xl group flex flex-col">
+    <div class="relative w-full h-full bg-black flex flex-col">
         
         @include('components.navbar')
         
-        <div class="absolute inset-0 bg-cover bg-center" 
+        <!-- Background Bersih Tanpa Class GPU -->
+        <div class="absolute inset-0 bg-cover bg-center pointer-events-none" 
              style="background-image: url('https://www.pens.ac.id/wp-content/uploads/2024/07/WEB-KRI-DAY-1-1-1080x675.jpg');">
-            <div class="absolute inset-0 bg-black/90 backdrop-blur-sm"></div>
+            <div class="absolute inset-0 bg-black/90 backdrop-blur-sm"></div> 
         </div>
 
-        <div class="relative z-20 flex-1 overflow-y-auto no-scrollbar pt-28 pb-20 px-6 md:px-24">
+        <div class="relative z-20 flex-1 overflow-y-auto no-scrollbar pt-32 pb-20 px-6 md:px-24">
             
-            <div class="max-w-4xl mx-auto text-center mb-16">
-                <span class="text-cyan-400 font-bold tracking-[0.5em] text-xs uppercase mb-4 block">Who We Are</span>
-                <h1 class="text-4xl md:text-6xl font-bold text-white font-tech uppercase mb-6 leading-tight">
+            <div class="max-w-4xl mx-auto text-center mb-20 mt-10">
+                <span class="text-cyan-400 font-bold tracking-[0.5em] text-xs uppercase mb-4 block animate-pulse">Who We Are</span>
+                <h1 class="text-4xl md:text-6xl font-bold font-tech uppercase mb-6 leading-tight drop-shadow-lg">
                     We Are <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">EMOSVER</span>
                 </h1>
-                <p class="text-gray-400 text-sm md:text-base leading-relaxed max-w-2xl mx-auto">
-                    Tim Robotika Bawah Air dari PENS yang berdedikasi untuk mengembangkan teknologi AUV (Autonomous Underwater Vehicle). Kami menggabungkan presisi mekanik, kecerdasan buatan, dan sistem kontrol canggih untuk menaklukkan kedalaman.
+                <p class="text-gray-300 text-sm md:text-lg leading-relaxed max-w-3xl mx-auto font-light">
+                  Kami adalah tim riset dari PENS yang mengembangkan kendaraan bawah air, baik yang bergerak otomatis (AUV) maupun kendali jarak jauh (ROV). Melalui penggabungan rekayasa presisi dan sistem kontrol cerdas, kami menghadirkan solusi teknologi untuk eksplorasi maritim.
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto mb-24 items-center">
-                <div class="relative h-64 md:h-80 rounded-2xl overflow-hidden border border-white/10 group/img">
-                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070" class="w-full h-full object-cover grayscale group-hover/img:grayscale-0 transition duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-                    <div class="absolute bottom-6 left-6">
-                        <h3 class="text-white font-tech text-xl">The Deep Vision</h3>
-                        <p class="text-cyan-400 text-xs tracking-widest uppercase">Since 2023</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-7xl mx-auto mb-32 items-center">
+                
+                <div class="relative h-[400px] rounded-2xl overflow-hidden border border-white/20 group shadow-2xl">
+                    <img src="{{ asset('img/team.jpg') }}" loading="lazy" decoding="async" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-700 transform group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent pointer-events-none"></div>
+                    <div class="absolute bottom-8 left-8">
+                        <h3 class="font-tech text-2xl mb-1">The Deep Vision</h3>
+                        <p class="text-cyan-400 text-xs tracking-widest uppercase font-bold">Since 2023</p>
                     </div>
                 </div>
 
                 <div class="space-y-6">
-                    <h2 class="text-2xl text-white font-tech uppercase border-l-4 border-cyan-400 pl-4">Our Philosophy</h2>
+                    <h2 class="text-3xl font-tech uppercase border-l-4 border-cyan-400 pl-6 mb-8">Our Philosophy</h2>
                     
-                    <div class="bg-white/5 border border-white/10 p-4 rounded-xl">
-                        <h4 class="text-white font-bold mb-1 flex items-center gap-2"><i class="fa-solid fa-anchor text-cyan-400"></i> Resilience</h4>
-                        <p class="text-gray-400 text-xs">Seperti tekanan laut dalam, kami percaya ketahanan adalah kunci. Kami membangun sistem yang tangguh menghadapi segala rintangan.</p>
+                    <div class="glass-panel p-6 rounded-xl hover:bg-white/10">
+                        <h4 class="font-bold text-lg mb-2 flex items-center gap-3">
+                            <i class="fa-solid fa-anchor text-cyan-400 text-xl"></i> Resilience
+                        </h4>
+                        <p class="text-gray-400 text-sm leading-relaxed">Desain kami berfokus pada durabilitas. Setiap unit dibangun dengan standar tinggi untuk memastikan stabilitas dan performa di kedalaman ekstrem.</p>
                     </div>
                     
-                    <div class="bg-white/5 border border-white/10 p-4 rounded-xl">
-                        <h4 class="text-white font-bold mb-1 flex items-center gap-2"><i class="fa-solid fa-lightbulb text-yellow-400"></i> Innovation</h4>
-                        <p class="text-gray-400 text-xs">Tidak sekadar menyelam, tapi memahami. Kami menciptakan AI yang mampu "melihat" dan "berpikir" di bawah air.</p>
+                    <div class="glass-panel p-6 rounded-xl hover:bg-white/10">
+                        <h4 class="font-bold text-lg mb-2 flex items-center gap-3">
+                            <i class="fa-solid fa-lightbulb text-yellow-400 text-xl"></i> Innovation
+                        </h4>
+                        <p class="text-gray-400 text-sm leading-relaxed">Kami mengimplementasikan Computer Vision dan kecerdasan buatan untuk kemampuan navigasi serta deteksi objek secara otonom.</p>
                     </div>
 
-                    <div class="bg-white/5 border border-white/10 p-4 rounded-xl">
-                        <h4 class="text-white font-bold mb-1 flex items-center gap-2"><i class="fa-solid fa-users text-purple-400"></i> Synergy</h4>
-                        <p class="text-gray-400 text-xs">Lima pikiran, satu tujuan. Kolaborasi antara mekanik, elektrik, dan software adalah jantung EMOSVER.</p>
+                    <div class="glass-panel p-6 rounded-xl hover:bg-white/10">
+                        <h4 class="font-bold text-lg mb-2 flex items-center gap-3">
+                            <i class="fa-solid fa-users text-purple-400 text-xl"></i> Synergy
+                        </h4>
+                        <p class="text-gray-400 text-sm leading-relaxed">Enam spesialis, dua pembimbing, satu visi. Sinergi antara divisi mekanik, elektrik, dan software adalah fondasi utama EMOSVER.</p>
                     </div>
                 </div>
             </div>
 
-            <div class="max-w-5xl mx-auto mb-24">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl text-white font-tech uppercase mb-2">The Squad</h2>
-                    <span class="text-cyan-400 text-xs font-bold bg-cyan-900/30 px-4 py-1 rounded-full">5 Core Members</span>
+            <div class="max-w-6xl mx-auto mb-32">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-tech uppercase mb-4">The Squad</h2>
+                    <span class="text-cyan-400 text-xs font-bold bg-cyan-900/30 border border-cyan-500/30 px-6 py-2 rounded-full uppercase tracking-wider">6 Core Members</span>
                 </div>
 
-                <div class="flex flex-wrap justify-center gap-6">
+                <div class="flex flex-wrap justify-center gap-8">
                     
-                    <div class="w-full sm:w-[calc(33%-1rem)] bg-black/40 border border-white/10 p-6 rounded-2xl text-center hover:-translate-y-2 transition duration-300 group/card">
-                        <div class="w-24 h-24 rounded-full p-1 border-2 border-cyan-500 mx-auto mb-4 relative">
-                            <img src="https://ui-avatars.com/api/?name=Agus+S&background=0D8ABC&color=fff&size=128" class="w-full h-full rounded-full object-cover grayscale group-hover/card:grayscale-0 transition">
-                            <div class="absolute -bottom-2 -right-2 bg-cyan-500 text-black text-[10px] font-bold px-2 py-1 rounded-full">LEADER</div>
-                        </div>
-                        <h4 class="text-white font-bold text-lg">Agus Setiawan</h4>
-                        <p class="text-cyan-400 text-xs uppercase tracking-widest font-bold mb-2">Management</p>
-                        <p class="text-gray-500 text-[10px]">"Leadership is action, not position."</p>
+                    <div class="w-full sm:w-[300px] glass-panel p-8 rounded-3xl text-center hover:-translate-y-3 transition duration-500 group">
+                            <div class="w-32 h-32 rounded-full p-1 border-2 border-cyan-500 mx-auto mb-6 relative">
+                                <div class="w-full h-full rounded-full overflow-hidden relative">
+                                    <img src="{{ asset('img/team/ryan.jpg') }}" loading="lazy" decoding="async"
+                                        class="w-full h-full object-cover transition duration-500 
+                                                scale-150 object-bottom 
+                                                grayscale group-hover:grayscale-0 group-hover:scale-175">
+                                </div>
+                                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-cyan-600 text-[10px] font-bold px-3 py-1 rounded-full shadow-lg z-10">LEADER</div>
+                            </div>
+                        <h4 class="font-bold text-xl mb-1">RYAN PUTRA NURMAWAN</h4>
+                        <p class="text-cyan-400 text-xs uppercase tracking-widest font-bold mb-4">Leader</p>
+                        <p class="text-gray-500 text-xs italic">"Leadership is action, not position."</p>
                     </div>
 
-                    <div class="w-full sm:w-[calc(33%-1rem)] bg-black/40 border border-white/10 p-6 rounded-2xl text-center hover:-translate-y-2 transition duration-300 group/card">
-                        <div class="w-24 h-24 rounded-full p-1 border-2 border-purple-500 mx-auto mb-4 relative">
-                            <img src="https://ui-avatars.com/api/?name=Siti+N&background=8b5cf6&color=fff&size=128" class="w-full h-full rounded-full object-cover grayscale group-hover/card:grayscale-0 transition">
-                            <div class="absolute -bottom-2 -right-2 bg-purple-500 text-white text-[10px] font-bold px-2 py-1 rounded-full">CODE</div>
-                        </div>
-                        <h4 class="text-white font-bold text-lg">Siti Nurhaliza</h4>
-                        <p class="text-purple-400 text-xs uppercase tracking-widest font-bold mb-2">Software & AI</p>
-                        <p class="text-gray-500 text-[10px]">"Code speaks louder than words."</p>
+                    <div class="w-full sm:w-[300px] glass-panel p-8 rounded-3xl text-center hover:-translate-y-3 transition duration-500 group">
+                            <div class="w-32 h-32 rounded-full p-1 border-2 border-cyan-500 mx-auto mb-6 relative">
+                                <div class="w-full h-full rounded-full overflow-hidden relative">
+                                    <img src="{{ asset('img/team/zahra.jpg') }}" loading="lazy" decoding="async"
+                                    class="w-full h-full object-cover transition duration-500 
+                                                        scale-[1.8] object-bottom -translate-x-1 -translate-y-5 
+                                                        grayscale group-hover:grayscale-0 group-hover:scale-[2.0]">
+                                </div>
+                                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-cyan-600 text-[10px] font-bold px-3 py-1 rounded-full shadow-lg z-10">Program</div>
+                            </div>
+                        <h4 class="font-bold text-xl mb-1">AZZAHRA PRAMAGDA R</h4>
+                        <p class="text-purple-400 text-xs uppercase tracking-widest font-bold mb-4">Software & AI</p>
+                        <p class="text-gray-500 text-xs italic">"Code speaks louder than words."</p>
                     </div>
 
-                    <div class="w-full sm:w-[calc(33%-1rem)] bg-black/40 border border-white/10 p-6 rounded-2xl text-center hover:-translate-y-2 transition duration-300 group/card">
-                        <div class="w-24 h-24 rounded-full p-1 border-2 border-orange-500 mx-auto mb-4 relative">
-                            <img src="https://ui-avatars.com/api/?name=Budi+S&background=f97316&color=fff&size=128" class="w-full h-full rounded-full object-cover grayscale group-hover/card:grayscale-0 transition">
-                            <div class="absolute -bottom-2 -right-2 bg-orange-500 text-black text-[10px] font-bold px-2 py-1 rounded-full">MECH</div>
-                        </div>
-                        <h4 class="text-white font-bold text-lg">Budi Santoso</h4>
-                        <p class="text-orange-400 text-xs uppercase tracking-widest font-bold mb-2">Structure</p>
-                        <p class="text-gray-500 text-[10px]">"Build it strong, make it last."</p>
+                    <div class="w-full sm:w-[300px] glass-panel p-8 rounded-3xl text-center hover:-translate-y-3 transition duration-500 group">
+                        <div class="w-32 h-32 rounded-full p-1 border-2 border-cyan-500 mx-auto mb-6 relative">
+                                <div class="w-full h-full rounded-full overflow-hidden relative">
+                                    <img src="{{ asset('img/team/rifqi.jpg') }}" loading="lazy" decoding="async"
+                                    class="w-full h-full object-cover transition duration-500 
+                                                        scale-[1.8] object-bottom -translate-x-1 -translate-y-3 
+                                                        grayscale group-hover:grayscale-0 group-hover:scale-[2.0]">
+                                </div>
+                                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-cyan-600 text-[10px] font-bold px-3 py-1 rounded-full shadow-lg z-10">MECH</div>
+                            </div>
+                        <h4 class="font-bold text-xl mb-1">AHMAD RIFKI FERDIAN</h4>
+                        <p class="text-orange-400 text-xs uppercase tracking-widest font-bold mb-4">Structure</p>
+                        <p class="text-gray-500 text-xs italic">"Build it strong, make it last."</p>
                     </div>
 
-                    <div class="w-full sm:w-[calc(33%-1rem)] bg-black/40 border border-white/10 p-6 rounded-2xl text-center hover:-translate-y-2 transition duration-300 group/card">
-                        <div class="w-24 h-24 rounded-full p-1 border-2 border-yellow-500 mx-auto mb-4 relative">
-                            <img src="https://ui-avatars.com/api/?name=Dewi+S&background=eab308&color=fff&size=128" class="w-full h-full rounded-full object-cover grayscale group-hover/card:grayscale-0 transition">
-                            <div class="absolute -bottom-2 -right-2 bg-yellow-500 text-black text-[10px] font-bold px-2 py-1 rounded-full">ELEC</div>
-                        </div>
-                        <h4 class="text-white font-bold text-lg">Dewi Sartika</h4>
-                        <p class="text-yellow-400 text-xs uppercase tracking-widest font-bold mb-2">Electronics</p>
-                        <p class="text-gray-500 text-[10px]">"Powering the future."</p>
+                    <div class="w-full sm:w-[300px] glass-panel p-8 rounded-3xl text-center hover:-translate-y-3 transition duration-500 group">
+                             <div class="w-32 h-32 rounded-full p-1 border-2 border-cyan-500 mx-auto mb-6 relative">
+                                <div class="w-full h-full rounded-full overflow-hidden relative">
+                                    <img src="{{ asset('img/team/awang.jpg') }}" loading="lazy" decoding="async"
+                                    class="w-full h-full object-cover transition duration-500 
+                                                        scale-[1.8] object-bottom -translate-x-1 -translate-y-3 
+                                                        grayscale group-hover:grayscale-0 group-hover:scale-[2.0]">
+                                </div>
+                                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-cyan-600 text-[10px] font-bold px-3 py-1 rounded-full shadow-lg z-10">MECH</div>
+                            </div>
+                        <h4 class="font-bold text-xl mb-1">GUMAWANG SASONGKO</h4>
+                        <p class="text-orange-400 text-xs uppercase tracking-widest font-bold mb-4">Structure</p>
+                        <p class="text-gray-500 text-xs italic">"Build it strong, make it last."</p>
                     </div>
 
-                    <div class="w-full sm:w-[calc(33%-1rem)] bg-black/40 border border-white/10 p-6 rounded-2xl text-center hover:-translate-y-2 transition duration-300 group/card">
-                        <div class="w-24 h-24 rounded-full p-1 border-2 border-gray-400 mx-auto mb-4 relative">
-                            <img src="https://ui-avatars.com/api/?name=Rizky+A&background=9ca3af&color=fff&size=128" class="w-full h-full rounded-full object-cover grayscale group-hover/card:grayscale-0 transition">
-                            <div class="absolute -bottom-2 -right-2 bg-gray-400 text-black text-[10px] font-bold px-2 py-1 rounded-full">MGR</div>
-                        </div>
-                        <h4 class="text-white font-bold text-lg">Rizky Aditya</h4>
-                        <p class="text-gray-400 text-xs uppercase tracking-widest font-bold mb-2">Official & Ops</p>
-                        <p class="text-gray-500 text-[10px]">"Efficiency is key."</p>
+                    <div class="w-full sm:w-[300px] glass-panel p-8 rounded-3xl text-center hover:-translate-y-3 transition duration-500 group">
+                        <div class="w-32 h-32 rounded-full p-1 border-2 border-cyan-500 mx-auto mb-6 relative">
+                                <div class="w-full h-full rounded-full overflow-hidden relative">
+                                    <img src="{{ asset('img/team/raka.jpg') }}" loading="lazy" decoding="async"
+                                    class="w-full h-full object-cover transition duration-500 
+                                                        scale-[1.8] object-bottom -translate-x-0 -translate-y-3 
+                                                        grayscale group-hover:grayscale-0 group-hover:scale-[2.0]">
+                                </div>
+                                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-cyan-600 text-[10px] font-bold px-3 py-1 rounded-full shadow-lg z-10">ELECTRIC</div>
+                            </div>
+                        <h4 class="font-bold text-xl mb-1">RAKHA HANIF LUTFIRRAHMAN</h4>
+                        <p class="text-yellow-400 text-xs uppercase tracking-widest font-bold mb-4">Electronics</p>
+                        <p class="text-gray-500 text-xs italic">"Powering the future."</p>
+                    </div>
+
+                    <div class="w-full sm:w-[300px] glass-panel p-8 rounded-3xl text-center hover:-translate-y-3 transition duration-500 group">
+                            <div class="w-32 h-32 rounded-full p-1 border-2 border-cyan-500 mx-auto mb-6 relative">
+                                <div class="w-full h-full rounded-full overflow-hidden relative">
+                                        <img src="{{ asset('img/team/arif.jpg') }}" loading="lazy" decoding="async"
+                                            class="w-full h-full object-cover transition duration-500 
+                                                    scale-125 translate-x-0  object-center 
+                                                    grayscale group-hover:grayscale-0 group-hover:scale-150">
+                                </div>
+                                <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-cyan-600 text-[10px] font-bold px-3 py-1 rounded-full shadow-lg z-10">PROYEK MANAGER</div>
+                            </div>
+                        <h4 class="font-bold text-xl mb-1">ARIF MUHAMMAD IHSAN MARBUN</h4>
+                        <p class="text-blue-400 text-xs uppercase tracking-widest font-bold mb-4">Official & Ops</p>
+                        <p class="text-gray-500 text-xs italic">"Efficiency is key."</p>
                     </div>
 
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto mb-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 max-w-7xl mx-auto mb-24">
                 
                 <div>
-                    <h3 class="text-white font-bold uppercase tracking-widest mb-6 border-l-4 border-cyan-400 pl-4">Advisor & Mentors</h3>
-                    <div class="bg-white/5 border border-white/10 p-6 rounded-2xl flex items-center gap-6 mb-4 hover:bg-white/10 transition cursor-pointer">
-                        <img src="https://ui-avatars.com/api/?name=Dosen+1&background=fff&color=000" class="w-16 h-16 rounded-full border border-gray-500">
-                        <div>
-                            <h4 class="text-white font-bold">Bapak Dosen Pembimbing</h4>
-                            <p class="text-cyan-400 text-xs uppercase">Head of Robotics Lab</p>
-                            <p class="text-gray-500 text-xs mt-1">Mengawasi riset dan pengembangan teknis.</p>
+                    <h3 class="font-bold uppercase tracking-widest mb-8 border-l-4 border-cyan-400 pl-6 text-xl">Advisor & Mentors</h3>
+                    
+                        <div class="glass-panel p-6 rounded-2xl flex items-center gap-6 mb-6 hover:bg-white/5 transition duration-300">
+                            <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-cyan-500/30 shrink-0">
+                                <img src="{{ asset('img/team/pakadit.jpg') }}" loading="lazy" decoding="async" class="w-full h-full  object-cover translate-y-1">
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">ADYTIA DARMAWAN, S.ST., M.T.</h4>
+                                <p class="text-cyan-400 text-[10px] uppercase font-bold tracking-wider">TEAM ADVISOR - MECHATRONICS</p>
+                                <p class="text-gray-400 text-xs mt-2">Dosen pembimbing utama riset robotika.</p>
+                            </div>
                         </div>
-                    </div>
+
+                        <div class="glass-panel p-6 rounded-2xl flex items-center gap-6 mb-6 hover:bg-white/5 transition duration-300">
+                            <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-cyan-500/30 shrink-0">
+                                <img src="{{ asset('img/team/pakluqy.jpg') }}" loading="lazy" decoding="async" class="w-full h-full  object-cover translate-y-1">
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg">LUCKY PRADIGTA S.R., S.ST., M.T.</h4>
+                                <p class="text-cyan-400 text-[10px] uppercase font-bold tracking-wider">TEAM ADVISOR - INDUSTRIAL ELECTRO</p>
+                                <p class="text-gray-400 text-xs mt-2">Dosen pembimbing utama riset robotika.</p>
+                            </div>
+                        </div>
                 </div>
 
                 <div>
-                    <h3 class="text-white font-bold uppercase tracking-widest mb-6 border-l-4 border-purple-500 pl-4">Our Journey</h3>
-                    <div class="relative border-l border-gray-700 ml-3 space-y-8">
-                        <div class="relative pl-8">
-                            <span class="absolute -left-[5px] top-1 w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_10px_#22d3ee]"></span>
-                            <span class="text-cyan-400 font-bold text-xs block mb-1">2026</span>
-                            <h4 class="text-white font-bold text-sm">Target: KRBAI National</h4>
-                            <p class="text-gray-500 text-xs mt-1">Mempersiapkan robot Gen-3 untuk kompetisi nasional.</p>
+                    <h3 class="font-bold uppercase tracking-widest mb-8 border-l-4 border-purple-500 pl-6 text-xl">Our Journey</h3>
+                    <div class="relative border-l-2 border-white/10 ml-4 space-y-10 py-2">
+                        
+                        <div class="relative pl-10">
+                            <span class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-cyan-500 shadow-[0_0_15px_#22d3ee]"></span>
+                            <span class="text-cyan-400 font-bold text-xs block mb-1">CURRENT GOAL</span>
+                            <h4 class="font-bold text-lg">Kompetisi Kapal indonesia & Teknofest Turkey</h4>
+                            <p class="text-gray-400 text-sm mt-1">Fokus pada pengembangan sistem otonom tingkat lanjut untuk kompetisi internasional.</p>
                         </div>
-                        <div class="relative pl-8">
-                            <span class="absolute -left-[5px] top-1 w-2.5 h-2.5 rounded-full bg-gray-500"></span>
-                            <span class="text-gray-400 font-bold text-xs block mb-1">2025</span>
-                            <h4 class="text-white font-bold text-sm">Best System Innovation</h4>
-                            <p class="text-gray-500 text-xs mt-1">Mengembangkan sistem AI object detection pertama.</p>
+                        
+                        <div class="relative pl-10">
+                            <span class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-gray-600 border-2 border-black"></span>
+                            <span class="text-gray-400 font-bold text-xs block mb-1">2024</span>
+                            <h4 class="font-bold text-lg">Consistent Excellence</h4>
+                            <p class="text-gray-400 text-sm mt-1">Juara 3 Nasional & Regional KRBAI.</p>
                         </div>
-                        <div class="relative pl-8">
-                            <span class="absolute -left-[5px] top-1 w-2.5 h-2.5 rounded-full bg-gray-500"></span>
+                        
+                        <div class="relative pl-10">
+                            <span class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-gray-600 border-2 border-black"></span>
                             <span class="text-gray-400 font-bold text-xs block mb-1">2023</span>
-                            <h4 class="text-white font-bold text-sm">Team Formation</h4>
-                            <p class="text-gray-500 text-xs mt-1">EMOSVER resmi didirikan dengan 5 anggota inti.</p>
+                            <h4 class="font-bold text-lg">The Beginning</h4>
+                            <p class="text-gray-400 text-sm mt-1">Juara 2 Regional & Juara 3 Nasional di tahun debut.</p>
                         </div>
                     </div>
                 </div>
 
             </div>
 
-            <div class="text-center border-t border-white/10 pt-8 mt-10">
-                <p class="text-gray-500 text-xs uppercase tracking-widest mb-4">Are you ready for the deep?</p>
-                <div class="flex justify-center gap-4">
-                    <button class="w-10 h-10 rounded-full border border-gray-600 text-gray-400 hover:text-white hover:border-white transition flex items-center justify-center">
-                        <i class="fa-brands fa-instagram"></i>
-                    </button>
-                    <button class="w-10 h-10 rounded-full border border-gray-600 text-gray-400 hover:text-white hover:border-white transition flex items-center justify-center">
-                        <i class="fa-brands fa-linkedin-in"></i>
-                    </button>
+            <div class="text-center border-t border-white/10 pt-12 mt-12 pb-12">
+                <p class="text-gray-500 text-xs uppercase tracking-widest mb-6">Connect With Us</p>
+                <div class="flex justify-center gap-6 mb-8">
+                    <a href="https://www.instagram.com/emosver.team/" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black hover:-translate-y-1 transition duration-300">
+                        <i class="fa-brands fa-instagram text-xl"></i>
+                    </a>
+                    <a href="https://linkedin.com/company/emosver" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black hover:-translate-y-1 transition duration-300">
+                        <i class="fa-brands fa-linkedin-in text-xl"></i>
+                    </a>
+                    <a href="https://www.youtube.com/@emosver" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black hover:-translate-y-1 transition duration-300">
+                        <i class="fa-brands fa-youtube text-xl"></i>
+                    </a>
                 </div>
-                <p class="text-gray-600 text-[10px] mt-6">&copy; 2026 EMOSVER PENS. All Rights Reserved.</p>
+                <p class="text-gray-600 text-[10px]">&copy; 2026 EMOSVER PENS. All Rights Reserved.</p>
             </div>
 
         </div>
