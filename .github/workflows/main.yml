@@ -1,4 +1,4 @@
-name: Deploy ke Server Kampus
+﻿name: Deploy ke Server Kampus
 
 on:
   push:
@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
       # 1. Ambil source code dari GitHub
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -20,7 +21,13 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      # 3. Upload source code ke server
+      # 3. Tambahkan server ke known_hosts
+      - name: Add server to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p 1821 -H krbai.pens.ac.id >> ~/.ssh/known_hosts
+
+      # 4. Upload source code ke server
       - name: Deploy files with rsync
         run: |
           rsync -avz \
@@ -32,128 +39,84 @@ jobs:
             -e "ssh -p 1821" \
             ./ root@krbai.pens.ac.id:/var/www/laravel/
 
-      # 4. Fix permission Laravel
+      # 5. Fix permission Laravel
       - name: Fix Laravel permissions
         run: |
-          ssh -p 1821 root@krbai.pens.ac.id "
+          ssh -p 1821 root@krbai.pens.ac.id '
+            set -e
+
             cd /var/www/laravel
 
-            echo '========================================'
-            echo '       DETECT PHP USER'
-            echo '========================================'
+            echo "========================================"
+            echo "       DETECT PHP USER"
+            echo "========================================"
 
-            PHP_USER=\$(ps aux | grep '[p]hp-fpm' | head -1 | awk '{print \$1}')
+            PHP_USER=$(ps -eo user,comm | awk '\''$2 ~ /^php-fpm/ {print $1; exit}'\'')
 
-            if [ -z \"\$PHP_USER\" ]; then
+            if [ -z "$PHP_USER" ]; then
+              echo "PHP-FPM user tidak terdeteksi."
+              echo "Menggunakan www-data."
               PHP_USER=www-data
             fi
 
-            echo \"PHP USER: \$PHP_USER\"
+            echo "PHP USER: $PHP_USER"
 
-            echo ''
-            echo '========================================'
-            echo '       PERMISSION SEBELUM'
-            echo '========================================'
+            echo ""
+            echo "========================================"
+            echo "       PERMISSION SEBELUM"
+            echo "========================================"
 
-            stat -c '%U:%G %a %n' \
+            stat -c "%U:%G %a %n" \
               storage \
               storage/framework \
               storage/framework/views \
               bootstrap/cache
 
-            echo ''
-<<<<<<< HEAD
-=======
-            echo '========================================'
-            echo '       FIX PERMISSION'
-            echo '========================================'
+            echo ""
+            echo "========================================"
+            echo "       FIX PERMISSION"
+            echo "========================================"
 
-            chown -R \"\$PHP_USER:\$PHP_USER\" storage bootstrap/cache
+            chown -R "$PHP_USER:$PHP_USER" storage bootstrap/cache
             chmod -R 775 storage bootstrap/cache
 
-            echo ''
-            echo '========================================'
-            echo '       CLEAR LARAVEL CACHE'
-            echo '========================================'
+            echo ""
+            echo "========================================"
+            echo "       CLEAR LARAVEL CACHE"
+            echo "========================================"
 
             php artisan optimize:clear
 
-            echo ''
-            echo '========================================'
-            echo '       TEST WRITE STORAGE'
-            echo '========================================'
+            echo ""
+            echo "========================================"
+            echo "       TEST WRITE STORAGE"
+            echo "========================================"
 
-            TEST_FILE='storage/framework/views/.deploy-test'
+            TEST_FILE="storage/framework/views/.deploy-test"
 
-            echo 'deployment test' > \"\$TEST_FILE\"
+            echo "deployment test" > "$TEST_FILE"
 
-            if [ -f \"\$TEST_FILE\" ]; then
-              echo 'SUCCESS: storage/framework/views bisa ditulis'
-              rm -f \"\$TEST_FILE\"
+            if [ -f "$TEST_FILE" ]; then
+              echo "SUCCESS: storage/framework/views bisa ditulis"
+              rm -f "$TEST_FILE"
             else
-              echo 'ERROR: storage/framework/views TIDAK bisa ditulis'
+              echo "ERROR: storage/framework/views TIDAK bisa ditulis"
               exit 1
             fi
 
-            echo ''
-            echo '========================================'
-            echo '       PERMISSION SESUDAH'
-            echo '========================================'
+            echo ""
+            echo "========================================"
+            echo "       PERMISSION SESUDAH"
+            echo "========================================"
 
-            stat -c '%U:%G %a %n' \
+            stat -c "%U:%G %a %n" \
               storage \
               storage/framework \
               storage/framework/views \
               bootstrap/cache
 
-            echo ''
-            echo '========================================'
-            echo '       DEPLOY SELESAI'
->>>>>>> 8923d3a (Fix deployment workflow YAML)
-            echo '========================================'
-            echo '       FIX PERMISSION'
-            echo '========================================'
-
-            chown -R \"\$PHP_USER:\$PHP_USER\" storage bootstrap/cache
-            chmod -R 775 storage bootstrap/cache
-
-            echo ''
-            echo '========================================'
-            echo '       CLEAR LARAVEL CACHE'
-            echo '========================================'
-
-            php artisan optimize:clear
-
-            echo ''
-            echo '========================================'
-            echo '       TEST WRITE STORAGE'
-            echo '========================================'
-
-            TEST_FILE='storage/framework/views/.deploy-test'
-
-            echo 'deployment test' > \"\$TEST_FILE\"
-
-            if [ -f \"\$TEST_FILE\" ]; then
-              echo 'SUCCESS: storage/framework/views bisa ditulis'
-              rm -f \"\$TEST_FILE\"
-            else
-              echo 'ERROR: storage/framework/views TIDAK bisa ditulis'
-              exit 1
-            fi
-
-            echo ''
-            echo '========================================'
-            echo '       PERMISSION SESUDAH'
-            echo '========================================'
-
-            stat -c '%U:%G %a %n' \
-              storage \
-              storage/framework \
-              storage/framework/views \
-              bootstrap/cache
-
-            echo ''
-            echo '========================================'
-            echo '       DEPLOY SELESAI'
-            echo '========================================'
-          "
+            echo ""
+            echo "========================================"
+            echo "       DEPLOY SELESAI"
+            echo "========================================"
+          '
