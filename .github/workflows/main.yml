@@ -119,25 +119,43 @@ jobs:
           set -Eeuo pipefail
           cd "$DEPLOY_PATH"
 
-          test -f .env || { echo "Missing $DEPLOY_PATH/.env" >&2; exit 1; }
+          echo "== environment =="
+          echo "pwd: $(pwd)"
+          echo "user: $(id -un)"
+          command -v php >/dev/null || { echo "php not found in PATH" >&2; exit 1; }
+          echo "php: $(command -v php) $(php -r 'echo PHP_VERSION;')"
+
+          test -f .env || { echo "missing $DEPLOY_PATH/.env" >&2; exit 1; }
           test -f vendor/autoload.php || { echo "vendor missing from release" >&2; exit 1; }
           test -f public/build/manifest.json || { echo "built assets missing from release" >&2; exit 1; }
+          test -f public/.htaccess || { echo "public/.htaccess missing" >&2; exit 1; }
 
-          mkdir -p storage/framework/{cache,sessions,views} storage/logs bootstrap/cache
+          mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views storage/logs bootstrap/cache
 
+          echo "== migrate =="
           php artisan migrate --force --no-interaction
+
+          echo "== cache =="
           php artisan optimize:clear
           php artisan config:cache
-          php artisan route:cache
           php artisan view:cache
 
+          # Route caching is optional: it only works when every route is serialisable.
+          if php artisan route:cache; then
+            echo "route cache: enabled"
+          else
+            echo "route cache: skipped (routes not cacheable, cleared instead)" >&2
+            php artisan route:clear
+          fi
+
+          echo "== permissions =="
           PHP_USER="$(ps -eo user,comm | awk '$2 ~ /^php-fpm/ {print $1; exit}')"
           PHP_USER="${PHP_USER:-www-data}"
           echo "php user: $PHP_USER"
-          chown -R "$PHP_USER:$PHP_USER" storage bootstrap/cache
+          chown -R "$PHP_USER:$PHP_USER" storage bootstrap/cache || echo "warning: chown failed (not root?)" >&2
           chmod -R ug+rwX storage bootstrap/cache
+          test -w storage/framework/views || { echo "storage/framework/views not writable" >&2; exit 1; }
 
-          test -w storage/framework/views
           echo "release activated in $DEPLOY_PATH"
           REMOTE
 
