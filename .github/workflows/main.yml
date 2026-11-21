@@ -42,11 +42,11 @@ jobs:
       - name: Install frontend dependencies
         run: npm ci --no-audit --no-fund
 
-      - name: Run tests
-        run: php artisan test
-
       - name: Build frontend assets
         run: npm run build
+
+      - name: Run tests
+        run: php artisan test
 
       - name: Prune dev dependencies for the release
         run: composer install --no-dev --prefer-dist --no-interaction --no-progress --optimize-autoloader
