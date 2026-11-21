@@ -8,6 +8,12 @@
 @props(['name' => 'dot', 'class' => '', 'stroke' => 1.7])
 
 @php
+    // Icons are sized in `em`, exactly like Font Awesome glyphs were: the
+    // surrounding `text-*` utility sets the font-size and the SVG follows it.
+    // Without this an inline <svg> has no intrinsic size and fills its parent.
+    // An explicit h-*/w-* class wins, so callers can still force a pixel size.
+    $sized = preg_match('/(^|\s)[hw]-/', $class) ? '' : 'h-[1em] w-[1em]';
+
     $paths = [
         'chevron-down' => '<path d="M6 9l6 6 6-6"/>',
         'chevron-left' => '<path d="M15 18l-6-6 6-6"/>',
@@ -32,7 +38,7 @@
     $body = $paths[$name] ?? $paths['dot'];
 @endphp
 
-<svg {{ $attributes->merge(['class' => 'inline-block shrink-0 ' . $class]) }}
+<svg {{ $attributes->merge(['class' => 'inline-block shrink-0 ' . $sized . ' ' . $class]) }}
      viewBox="0 0 24 24"
      fill="none"
      stroke="currentColor"
