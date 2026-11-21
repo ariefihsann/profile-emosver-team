@@ -70,6 +70,7 @@ jobs:
         with:
           name: emosver-release
           path: release
+          include-hidden-files: true
           retention-days: 7
 
   deploy:
@@ -102,6 +103,7 @@ jobs:
         env:
           DEPLOY_USER: ${{ secrets.DEPLOY_USER || 'root' }}
         run: |
+          test -f release/public/.htaccess || { echo "release is missing public/.htaccess" >&2; exit 1; }
           rsync -az --delete --itemize-changes \
             --exclude='.env' \
             --exclude='storage/' \
