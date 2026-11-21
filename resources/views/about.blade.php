@@ -6,11 +6,7 @@
     <link rel="icon" href="{{ asset('img/logo.jpg') }}" type="image/jpeg">
     <title>About Team - EMOSVER PENS</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <style>
         body { margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; background-color: #000; overflow-x: hidden; }
@@ -84,21 +80,21 @@
                     
                     <div class="glass-panel p-6 rounded-xl hover:bg-white/10">
                         <h4 class="font-bold text-lg mb-2 flex items-center gap-3">
-                            <i class="fa-solid fa-anchor text-cyan-400 text-xl"></i> Resilience
+                            <x-icon name="anchor" class="text-cyan-400 text-xl" /> Resilience
                         </h4>
                         <p class="text-gray-400 text-sm leading-relaxed">Desain kami berfokus pada durabilitas. Setiap unit dibangun dengan standar tinggi untuk memastikan stabilitas dan performa di kedalaman ekstrem.</p>
                     </div>
                     
                     <div class="glass-panel p-6 rounded-xl hover:bg-white/10">
                         <h4 class="font-bold text-lg mb-2 flex items-center gap-3">
-                            <i class="fa-solid fa-lightbulb text-yellow-400 text-xl"></i> Innovation
+                            <x-icon name="lightbulb" class="text-yellow-400 text-xl" /> Innovation
                         </h4>
                         <p class="text-gray-400 text-sm leading-relaxed">Kami mengimplementasikan Computer Vision dan kecerdasan buatan untuk kemampuan navigasi serta deteksi objek secara otonom.</p>
                     </div>
 
                     <div class="glass-panel p-6 rounded-xl hover:bg-white/10">
                         <h4 class="font-bold text-lg mb-2 flex items-center gap-3">
-                            <i class="fa-solid fa-users text-purple-400 text-xl"></i> Synergy
+                            <x-icon name="users" class="text-purple-400 text-xl" /> Synergy
                         </h4>
                         <p class="text-gray-400 text-sm leading-relaxed">Enam spesialis, dua pembimbing, satu visi. Sinergi antara divisi mekanik, elektrik, dan software adalah fondasi utama EMOSVER.</p>
                     </div>
@@ -267,13 +263,13 @@
                 <p class="text-gray-500 text-xs uppercase tracking-widest mb-6">Connect With Us</p>
                 <div class="flex justify-center gap-6 mb-8">
                     <a href="https://www.instagram.com/emosver.team/" target="_blank" rel="noopener noreferrer" aria-label="Instagram EMOSVER" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black hover:-translate-y-1 transition duration-300">
-                        <i class="fa-brands fa-instagram text-xl"></i>
+                        <x-icon name="instagram" class="text-xl" />
                     </a>
                     <a href="https://linkedin.com/company/emosver" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn EMOSVER" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black hover:-translate-y-1 transition duration-300">
-                        <i class="fa-brands fa-linkedin-in text-xl"></i>
+                        <x-icon name="linkedin" class="text-xl" />
                     </a>
                     <a href="https://www.youtube.com/@emosver" target="_blank" rel="noopener noreferrer" aria-label="YouTube EMOSVER" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black hover:-translate-y-1 transition duration-300">
-                        <i class="fa-brands fa-youtube text-xl"></i>
+                        <x-icon name="youtube" class="text-xl" />
                     </a>
                 </div>
                 <p class="text-gray-600 text-[10px]">&copy; 2026 EMOSVER PENS. All Rights Reserved.</p>

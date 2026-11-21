@@ -1,114 +1,82 @@
-<div id="page-loader" class="fixed inset-0 z-[9999] flex items-center justify-center bg-black transition-all duration-300 ease-in-out" aria-hidden="true">
-    <div class="absolute inset-0 bg-black/80 backdrop-blur-2xl"></div>
-    
-    <div class="relative flex items-center justify-center">
-        <div class="w-20 h-20 border border-cyan-500/10 rounded-full"></div>
-        <div class="absolute w-20 h-20 border-2 border-t-cyan-400 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-[spin_0.8s_linear_infinite]"></div>
-        <div class="absolute">
-            <div class="w-2 h-2 bg-cyan-400 rounded-full shadow-[0_0_15px_rgba(34,211,238,0.8)] animate-pulse"></div>
-        </div>
-    </div>
-</div>
+{{--
+    Site header.
 
-<nav x-data="{ mobileOpen: false }" class="absolute top-0 left-0 w-full z-50 pointer-events-none transition-all duration-300 h-32 bg-gradient-to-b from-black/95 via-black/70 to-transparent backdrop-blur-[2px]">
-    <div class="flex items-center w-full px-6 py-6 md:px-12 md:py-8 pointer-events-auto">
-        <div class="flex items-center gap-3 cursor-pointer hover-scale-trigger" onclick="window.location.href='{{ route('home') }}'">
-            <div class="bg-white p-2 rounded-full shadow-lg shadow-cyan-500/20 transition duration-300 logo-bg">
-                <div class="logo-wrapper">
-                    <img src="{{ asset('img/logo.jpg') }}" class="logo-zoom" alt="Logo">
-                </div>
-            </div>
-            <div class="flex flex-col drop-shadow-md">
-                <span class="text-sm font-bold tracking-widest font-tech text-white leading-none logo-text transition">EMOSVER</span>
-                <span class="text-[10px] text-gray-300 tracking-wider">UNDERWATER ROBOTICS</span>
-            </div>
-        </div>
+    Mirrors the reference layout: navigation left, wordmark centred, contact
+    right, hairline rule underneath. The full-screen loader was removed — it
+    delayed first paint on every navigation.
+--}}
+@php
+    $links = [
+        ['route' => 'home', 'label' => 'Home'],
+        ['route' => 'about', 'label' => 'About Team'],
+        ['route' => 'gallery', 'label' => 'Gallery'],
+    ];
+@endphp
 
-        <ul class="hidden md:flex gap-10 text-sm font-medium tracking-wide items-center ml-16">
-            @foreach([['route'=>'home','label'=>'Home'], ['route'=>'about','label'=>'About Team'], ['route'=>'gallery','label'=>'Gallery'], ['route'=>'tech','label'=>'Contact']] as $item)
-            <li class="relative menu-item">
-                <a href="{{ route($item['route']) }}" class="block py-2 transition-colors duration-300 {{ Route::is($item['route']) ? 'text-white' : 'text-gray-400 menu-link' }}">
-                    {{ $item['label'] }}
-                </a>
-                <span class="menu-line absolute bottom-0 left-0 w-full h-[2px] bg-cyan-400 transform transition-transform duration-300 origin-left {{ Route::is($item['route']) ? 'scale-x-100' : 'scale-x-0' }}"></span>
-            </li>
-            @endforeach
-        </ul>
-
-        <!-- Di sini @click diubah menjadi x-on:click agar tidak bentrok dengan Laravel Blade -->
-        <button x-on:click="mobileOpen = !mobileOpen" class="ml-auto md:hidden text-white text-2xl focus:outline-none p-2 rounded-lg border border-white/20 bg-black/30 backdrop-blur-md hover:bg-white/10 transition">
-            <i class="fa-solid" :class="mobileOpen ? 'fa-xmark' : 'fa-bars'"></i>
-        </button>
-    </div>
-
-    <div x-show="mobileOpen" 
-         x-transition:enter="transition ease-out duration-300"
-         x-transition:enter-start="opacity-0 -translate-y-5"
-         x-transition:enter-end="opacity-100 translate-y-0"
-         x-transition:leave="transition ease-in duration-200"
-         x-transition:leave-start="opacity-100 translate-y-0"
-         x-transition:leave-end="opacity-0 -translate-y-5"
-         class="md:hidden pointer-events-auto absolute top-24 left-0 w-full px-6 z-40">
-        
-        <div class="bg-black/95 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden p-6 shadow-2xl">
-            <ul class="flex flex-col gap-3 text-center">
-                @foreach([['route'=>'home','label'=>'Home'], ['route'=>'about','label'=>'About Team'], ['route'=>'gallery','label'=>'Gallery'], ['route'=>'tech','label'=>'Contact']] as $item)
-                <li>
-                    <a href="{{ route($item['route']) }}" class="block py-3 text-sm font-bold tracking-widest uppercase rounded-xl transition-all duration-300 {{ Route::is($item['route']) ? 'text-black bg-cyan-400 shadow-[0_0_15px_#22d3ee]' : 'text-gray-300 hover:text-white hover:bg-white/10' }}">
+<header x-data="{ open: false }" class="fixed inset-x-0 top-0 z-50">
+    <div class="border-b border-lagoon-200/20 bg-abyss-950/70 backdrop-blur-md">
+        <div class="mx-auto flex h-16 max-w-[1400px] items-center gap-6 px-5 sm:px-8">
+            <nav class="hidden flex-1 items-center gap-7 md:flex" aria-label="Navigasi utama">
+                @foreach ($links as $item)
+                    <a href="{{ route($item['route']) }}"
+                       @class([
+                           'text-[13px] tracking-wide transition-colors',
+                           'text-lagoon-200' => Route::is($item['route']),
+                           'text-slate-300/80 hover:text-white' => ! Route::is($item['route']),
+                       ])
+                       @if (Route::is($item['route'])) aria-current="page" @endif>
                         {{ $item['label'] }}
                     </a>
-                </li>
                 @endforeach
-            </ul>
+            </nav>
+
+            <a href="{{ route('home') }}"
+               class="flex items-center gap-2.5 md:absolute md:left-1/2 md:-translate-x-1/2"
+               aria-label="EMOSVER, kembali ke beranda">
+                <span class="grid h-8 w-8 place-items-center overflow-hidden rounded-full bg-white/95 p-1">
+                    <img src="{{ asset('img/logo.jpg') }}" alt="" width="32" height="32"
+                         class="h-full w-full scale-[1.9] object-cover" decoding="async">
+                </span>
+                <span class="font-tech text-[15px] font-medium tracking-[0.2em] text-white">EMOSVER</span>
+            </a>
+
+            <div class="ml-auto flex flex-1 items-center justify-end gap-5">
+                <a href="{{ route('tech') }}"
+                   @class([
+                       'hidden text-[13px] tracking-wide transition-colors sm:block',
+                       'text-lagoon-200' => Route::is('tech'),
+                       'text-slate-300/80 hover:text-white' => ! Route::is('tech'),
+                   ])>
+                    Contact
+                </a>
+
+                <button type="button"
+                        x-on:click="open = ! open"
+                        :aria-expanded="open ? 'true' : 'false'"
+                        aria-controls="mobile-nav"
+                        aria-label="Buka menu"
+                        class="grid h-9 w-9 place-items-center rounded-full border border-white/15 text-slate-200 transition hover:border-lagoon-300/60 hover:text-white md:hidden">
+                    <x-icon name="chevron-down" class="h-4 w-4" x-bind:class="open ? 'rotate-180' : ''" />
+                </button>
+            </div>
         </div>
     </div>
-</nav>
 
-<style>
-    .loader-hidden { opacity: 0 !important; visibility: hidden !important; transform: scale(1.05); }
-    .loading-active { overflow: hidden !important; }
-    .menu-item:hover .menu-line { transform: scaleX(1) !important; }
-    .menu-item:hover .menu-link { color: #ffffff !important; }
-    .hover-scale-trigger:hover .logo-bg { transform: scale(1.1); }
-    .hover-scale-trigger:hover .logo-text { color: #22d3ee; }
-</style>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const loader = document.getElementById('page-loader');
-        const body = document.body;
-
-        function hideLoader() {
-            if (loader && !loader.classList.contains('loader-hidden')) {
-                loader.classList.add('loader-hidden');
-                body.classList.remove('loading-active');
-                setTimeout(() => { loader.style.display = 'none'; }, 700);
-            }
-        }
-
-        window.addEventListener('load', hideLoader);
-        setTimeout(hideLoader, 3000); 
-
-        const links = document.querySelectorAll('a, .hover-scale-trigger');
-        links.forEach(link => {
-            link.addEventListener('click', function(e) {
-                let targetUrl = this.href;
-                
-                if (!targetUrl && this.getAttribute('onclick')) {
-                    const match = this.getAttribute('onclick').match(/'([^']+)'/);
-                    if (match) targetUrl = match[1];
-                }
-
-                if (targetUrl && targetUrl.indexOf(window.location.hostname) > -1 && !targetUrl.includes('#') && this.target !== '_blank') {
-                    e.preventDefault();
-                    if(loader) {
-                        loader.classList.remove('loader-hidden');
-                        loader.style.display = 'flex'; 
-                    }
-                    body.classList.add('loading-active');
-                    setTimeout(() => { window.location.href = targetUrl; }, 600);
-                }
-            });
-        });
-    });
-</script>
+    <div id="mobile-nav" x-show="open" x-cloak
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0 -translate-y-2"
+         x-transition:enter-end="opacity-100 translate-y-0"
+         x-transition:leave="transition ease-in duration-150"
+         x-transition:leave-start="opacity-100 translate-y-0"
+         x-transition:leave-end="opacity-0 -translate-y-2"
+         class="border-b border-lagoon-200/20 bg-abyss-950/95 backdrop-blur-xl md:hidden">
+        <nav class="mx-auto flex max-w-[1400px] flex-col px-5 py-3" aria-label="Navigasi seluler">
+            @foreach (array_merge($links, [['route' => 'tech', 'label' => 'Contact']]) as $item)
+                <a href="{{ route($item['route']) }}"
+                   class="border-b border-white/5 py-3 text-sm tracking-wide last:border-0 {{ Route::is($item['route']) ? 'text-lagoon-200' : 'text-slate-300' }}">
+                    {{ $item['label'] }}
+                </a>
+            @endforeach
+        </nav>
+    </div>
+</header>

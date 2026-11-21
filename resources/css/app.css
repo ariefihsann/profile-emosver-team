@@ -5,9 +5,125 @@
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
+/* ------------------------------------------------------------------
+   Self-hosted fonts.
+
+   Montserrat and Orbitron are served from public/fonts instead of
+   Google Fonts: one less connection, no third-party render blocking,
+   and the files are cached with the rest of the assets.
+   ------------------------------------------------------------------ */
+
+@font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 300 800;
+    font-display: swap;
+    src: url('/fonts/montserrat-latin.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+        U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191,
+        U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: 'Orbitron';
+    font-style: normal;
+    font-weight: 400 800;
+    font-display: swap;
+    src: url('/fonts/orbitron-latin.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+        U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191,
+        U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Montserrat', ui-sans-serif, system-ui, -apple-system, sans-serif;
+    --font-tech: 'Orbitron', ui-sans-serif, system-ui, sans-serif;
+
+    --color-abyss-950: #030c14;
+    --color-abyss-900: #05141f;
+    --color-abyss-800: #072030;
+    --color-abyss-700: #0a2c40;
+
+    --color-lagoon-400: #38d6e8;
+    --color-lagoon-300: #67e8f9;
+    --color-lagoon-200: #a5f3fc;
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    [x-cloak] {
+        display: none !important;
+    }
+
+    body {
+        font-family: var(--font-sans);
+        background-color: var(--color-abyss-950);
+        color: #e8f4f8;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection {
+        background: rgba(56, 214, 232, 0.3);
+    }
+}
+
+@layer components {
+    /* Hairline dividers that give the page its technical, blueprint feel. */
+    .hairline {
+        border-color: rgba(165, 243, 252, 0.14);
+    }
+
+    .panel {
+        background: rgba(6, 26, 38, 0.55);
+        border: 1px solid rgba(165, 243, 252, 0.16);
+    }
+
+    .label-xs {
+        font-size: 0.625rem;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+    }
+
+    /* Slow drift used by the caustic light layer in the hero. */
+    .caustics {
+        background-image:
+            radial-gradient(ellipse 60% 40% at 20% 10%, rgba(103, 232, 249, 0.16), transparent 60%),
+            radial-gradient(ellipse 50% 35% at 78% 6%, rgba(56, 214, 232, 0.12), transparent 62%),
+            repeating-linear-gradient(
+                118deg,
+                rgba(165, 243, 252, 0.055) 0px,
+                rgba(165, 243, 252, 0.055) 2px,
+                transparent 2px,
+                transparent 22px
+            );
+        animation: caustic-drift 26s ease-in-out infinite alternate;
+    }
+
+    @keyframes caustic-drift {
+        from {
+            transform: translate3d(-1.5%, 0, 0) scale(1.04);
+        }
+        to {
+            transform: translate3d(1.5%, -1%, 0) scale(1.1);
+        }
+    }
+
+    .rise {
+        animation: rise 9s ease-in-out infinite;
+    }
+
+    @keyframes rise {
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-14px);
+        }
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {

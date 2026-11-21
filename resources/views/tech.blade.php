@@ -6,11 +6,7 @@
     <link rel="icon" href="{{ asset('img/logo.jpg') }}" type="image/jpeg">
     <title>Contact - EMOSVER PENS</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <style>
         /* Fullscreen Reset */
@@ -89,7 +85,7 @@
                     <div class="space-y-6">
                         <div class="flex items-start gap-4 group/info">
                             <div class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 group-hover/info:border-cyan-500/50 group-hover/info:bg-cyan-900/20 transition duration-300">
-                                <i class="fa-solid fa-location-dot text-gray-400 group-hover/info:text-cyan-400"></i>
+                                <x-icon name="location" class="text-gray-400 group-hover/info:text-cyan-400" />
                             </div>
                             <div>
                                 <h4 class="text-white font-bold uppercase text-sm mb-1">Basecamp</h4>
@@ -102,7 +98,7 @@
 
                         <div class="flex items-start gap-4 group/info">
                             <div class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 group-hover/info:border-cyan-500/50 group-hover/info:bg-cyan-900/20 transition duration-300">
-                                <i class="fa-solid fa-envelope text-gray-400 group-hover/info:text-cyan-400"></i>
+                                <x-icon name="envelope" class="text-gray-400 group-hover/info:text-cyan-400" />
                             </div>
                             <div>
                                 <h4 class="text-white font-bold uppercase text-sm mb-1">Email Transmission</h4>
@@ -112,9 +108,9 @@
                         </div>
 
                         <div class="flex items-center gap-4 mt-8 justify-center md:justify-start">
-                             <a href="https://www.instagram.com/emosver.team/" class="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:text-white hover:bg-cyan-600 hover:border-cyan-600 transition"><i class="fa-brands fa-instagram"></i></a>
-                             <a href="https://linkedin.com/company/emosver" class="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:text-white hover:bg-blue-600 hover:border-blue-600 transition"><i class="fa-brands fa-linkedin-in"></i></a>
-                             <a href="https://www.youtube.com/@emosver" target="_blank" rel="noopener noreferrer" aria-label="YouTube EMOSVER" class="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:text-white hover:bg-red-600 hover:border-red-600 transition"><i class="fa-brands fa-youtube"></i></a>
+                             <a href="https://www.instagram.com/emosver.team/" class="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:text-white hover:bg-cyan-600 hover:border-cyan-600 transition"><x-icon name="instagram" class="" /></a>
+                             <a href="https://linkedin.com/company/emosver" class="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:text-white hover:bg-blue-600 hover:border-blue-600 transition"><x-icon name="linkedin" class="" /></a>
+                             <a href="https://www.youtube.com/@emosver" target="_blank" rel="noopener noreferrer" aria-label="YouTube EMOSVER" class="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:text-white hover:bg-red-600 hover:border-red-600 transition"><x-icon name="youtube" class="" /></a>
                         </div>
                     </div>
                 </div>
@@ -125,7 +121,7 @@
                     <div class="absolute bottom-0 left-0 w-20 h-20 bg-purple-500/10 blur-2xl rounded-full pointer-events-none"></div>
 
                     <h3 class="text-white font-tech uppercase text-xl mb-6 flex items-center gap-3">
-                        <i class="fa-regular fa-paper-plane text-cyan-400"></i> Send Message
+                        <x-icon name="paper-plane" class="text-cyan-400" /> Send Message
                     </h3>
 
                    <form action="{{ route('contact.send') }}" method="POST" class="space-y-5">

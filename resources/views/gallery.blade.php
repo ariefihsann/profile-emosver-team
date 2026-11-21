@@ -6,11 +6,7 @@
     <link rel="icon" href="{{ asset('img/logo.jpg') }}" type="image/jpeg">
     <title>Gallery - EMOSVER PENS</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <style>
         /* Fullscreen Reset */
@@ -96,10 +92,10 @@
                 </template>
 
                 <button @click="prev()" class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 backdrop-blur rounded-full text-white hover:bg-cyan-500 hover:text-black transition flex items-center justify-center opacity-0 group-hover/slider:opacity-100 border border-white/20">
-                    <i class="fa-solid fa-chevron-left"></i>
+                    <x-icon name="chevron-left" class="" />
                 </button>
                 <button @click="next()" class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 backdrop-blur rounded-full text-white hover:bg-cyan-500 hover:text-black transition flex items-center justify-center opacity-0 group-hover/slider:opacity-100 border border-white/20">
-                    <i class="fa-solid fa-chevron-right"></i>
+                    <x-icon name="chevron-right" class="" />
                 </button>
             </div>
 
@@ -116,7 +112,7 @@
                     <div x-show="activeTab === 'all' || activeTab === 'competition'" class="relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer group/img border border-white/10" @click="openModal('{{ asset('img/competition.webp') }}', 'KRBAI 2023 Finals')">
                         <img src="{{ asset('img/competition.webp') }}" alt="Tim EMOSVER pada final KRBAI 2023" width="1200" height="900" loading="lazy" decoding="async" class="w-full h-full object-cover transition duration-700 group-hover/img:scale-110">
                         <div class="absolute inset-0 bg-black/60 opacity-0 group-hover/img:opacity-100 transition duration-300 flex items-center justify-center">
-                            <i class="fa-solid fa-expand text-white text-3xl"></i>
+                            <x-icon name="expand" class="text-white text-3xl" />
                         </div>
                         <div class="absolute bottom-4 left-4">
                             <span class="bg-cyan-900/80 text-cyan-400 text-[10px] px-2 py-1 rounded font-bold uppercase border border-cyan-500/30">Competition</span>
@@ -126,7 +122,7 @@
                     <div x-show="activeTab === 'all' || activeTab === 'dev'" class="relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer group/img border border-white/10" @click="openModal('{{ asset('img/dev.webp') }}', 'Preparing for Assembly')">
                         <img src="{{ asset('img/dev.webp') }}" alt="Proses perakitan dan kalibrasi robot bawah air" width="1200" height="800" loading="lazy" decoding="async" class="w-full h-full object-cover transition duration-700 group-hover/img:scale-110">
                         <div class="absolute inset-0 bg-black/60 opacity-0 group-hover/img:opacity-100 transition duration-300 flex items-center justify-center">
-                            <i class="fa-solid fa-expand text-white text-3xl"></i>
+                            <x-icon name="expand" class="text-white text-3xl" />
                         </div>
                         <div class="absolute bottom-4 left-4">
                             <span class="bg-purple-900/80 text-purple-400 text-[10px] px-2 py-1 rounded font-bold uppercase border border-purple-500/30">Dev</span>
@@ -136,7 +132,7 @@
                     <div x-show="activeTab === 'all' || activeTab === 'team'" class="relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer group/img border border-white/10" @click="openModal('{{ asset('img/fun.webp') }}', 'Team Briefing')">
                         <img src="{{ asset('img/fun.webp') }}" alt="Sesi briefing tim EMOSVER" width="1200" height="900" loading="lazy" decoding="async" class="w-full h-full object-cover transition duration-700 group-hover/img:scale-110">
                         <div class="absolute inset-0 bg-black/60 opacity-0 group-hover/img:opacity-100 transition duration-300 flex items-center justify-center">
-                            <i class="fa-solid fa-expand text-white text-3xl"></i>
+                            <x-icon name="expand" class="text-white text-3xl" />
                         </div>
                         <div class="absolute bottom-4 left-4">
                             <span class="bg-green-900/80 text-green-400 text-[10px] px-2 py-1 rounded font-bold uppercase border border-green-500/30">Team</span>
@@ -146,7 +142,7 @@
                     <div x-show="activeTab === 'all' || activeTab === 'dev'" class="relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer group/img border border-white/10" @click="openModal('{{ asset('img/solder.webp') }}', 'Soldering PCB')">
                         <img src="{{ asset('img/solder.webp') }}" alt="Penyolderan PCB sistem kontrol robot" width="1200" height="571" loading="lazy" decoding="async" class="w-full h-full object-cover transition duration-700 group-hover/img:scale-110">
                         <div class="absolute inset-0 bg-black/60 opacity-0 group-hover/img:opacity-100 transition duration-300 flex items-center justify-center">
-                            <i class="fa-solid fa-expand text-white text-3xl"></i>
+                            <x-icon name="expand" class="text-white text-3xl" />
                         </div>
                         <div class="absolute bottom-4 left-4">
                             <span class="bg-purple-900/80 text-purple-400 text-[10px] px-2 py-1 rounded font-bold uppercase border border-purple-500/30">Dev</span>
@@ -156,7 +152,7 @@
                      <div x-show="activeTab === 'all' || activeTab === 'competition'" class="relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer group/img border border-white/10" @click="openModal('{{ asset('img/teamm.webp') }}', 'Pool Arena')">
                         <img src="{{ asset('img/teamm.webp') }}" alt="Tim EMOSVER di area kolam pengujian" width="1200" height="675" loading="lazy" decoding="async" class="w-full h-full object-cover transition duration-700 group-hover/img:scale-110">
                         <div class="absolute inset-0 bg-black/60 opacity-0 group-hover/img:opacity-100 transition duration-300 flex items-center justify-center">
-                            <i class="fa-solid fa-expand text-white text-3xl"></i>
+                            <x-icon name="expand" class="text-white text-3xl" />
                         </div>
                         <div class="absolute bottom-4 left-4">
                             <span class="bg-cyan-900/80 text-cyan-400 text-[10px] px-2 py-1 rounded font-bold uppercase border border-cyan-500/30">Competition</span>
@@ -166,7 +162,7 @@
                      <div x-show="activeTab === 'all' || activeTab === 'team'" class="relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer group/img border border-white/10" @click="openModal('{{ asset('img/after.webp') }}', 'After Competition')">
                         <img src="{{ asset('img/after.webp') }}" alt="Foto bersama tim setelah kompetisi" width="1200" height="675" loading="lazy" decoding="async" class="w-full h-full object-cover transition duration-700 group-hover/img:scale-110">
                         <div class="absolute inset-0 bg-black/60 opacity-0 group-hover/img:opacity-100 transition duration-300 flex items-center justify-center">
-                            <i class="fa-solid fa-expand text-white text-3xl"></i>
+                            <x-icon name="expand" class="text-white text-3xl" />
                         </div>
                         <div class="absolute bottom-4 left-4">
                             <span class="bg-green-900/80 text-green-400 text-[10px] px-2 py-1 rounded font-bold uppercase border border-green-500/30">Team</span>
@@ -179,7 +175,7 @@
             <div class="bg-black/40 border border-white/10 rounded-3xl p-8 mb-24">
                 <div class="flex items-center justify-between mb-8">
                     <h2 class="text-2xl text-white font-tech uppercase">Latest Mission Log</h2>
-                    <a href="https://youtu.be/UfjpnlcB18k" target="_blank" class="text-cyan-400 text-xs uppercase tracking-widest hover:text-white transition flex items-center gap-2">Visit Youtube <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="https://youtu.be/UfjpnlcB18k" target="_blank" class="text-cyan-400 text-xs uppercase tracking-widest hover:text-white transition flex items-center gap-2">Visit Youtube <x-icon name="arrow-right" class="" /></a>
                 </div>
                 
                 <div x-data="{ isPlaying: false }" class="aspect-video w-full bg-gray-900 rounded-2xl overflow-hidden relative group/video shadow-2xl border border-white/10">
@@ -191,7 +187,7 @@
                         <img src="{{ asset('img/aftermovie-poster.webp') }}" alt="Poster aftermovie KRBAI 2024" width="1280" height="720" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover/video:opacity-50 transition duration-500">
                         
                         <div class="w-20 h-20 rounded-full border-2 border-white flex items-center justify-center pl-1 bg-white/10 backdrop-blur-sm group-hover/video:bg-cyan-500 group-hover/video:border-cyan-500 group-hover/video:text-black text-white transition duration-300 transform group-hover/video:scale-110 z-10 shadow-[0_0_30px_rgba(0,0,0,0.5)]">
-                            <i class="fa-solid fa-play text-3xl"></i>
+                            <x-icon name="play" class="text-3xl" />
                         </div>
 
                         <p class="absolute bottom-6 text-white font-tech tracking-widest uppercase text-sm drop-shadow-md">KRBAI 2024 - Aftermovie</p>
@@ -214,13 +210,13 @@
                 <p class="text-gray-500 text-xs uppercase tracking-widest mb-6">FOLLOW OUR JOURNEY</p>
                 <div class="flex justify-center gap-6 mb-8">
                     <a href="https://www.instagram.com/emosver.team/" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black hover:scale-110 transition duration-300">
-                        <i class="fa-brands fa-instagram text-xl"></i>
+                        <x-icon name="instagram" class="text-xl" />
                     </a>
                     <a href="https://linkedin.com/company/emosver" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black hover:scale-110 transition duration-300">
-                        <i class="fa-brands fa-linkedin-in text-xl"></i>
+                        <x-icon name="linkedin" class="text-xl" />
                     </a>
                     <a href="https://www.youtube.com/@emosver" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black hover:scale-110 transition duration-300">
-                        <i class="fa-brands fa-youtube text-xl"></i>
+                        <x-icon name="youtube" class="text-xl" />
                     </a>
                 </div>
                 <p class="text-gray-600 text-[10px]">&copy; 2026 EMOSVER PENS. All Rights Reserved.</p>
@@ -238,7 +234,7 @@
              class="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-4 backdrop-blur-md">
             
             <button @click="modalOpen = false" class="absolute top-6 right-6 text-white text-4xl hover:text-cyan-400 transition">
-                <i class="fa-solid fa-xmark"></i>
+                <x-icon name="xmark" class="" />
             </button>
 
             <div @click.outside="modalOpen = false" class="max-w-5xl w-full max-h-[90vh] flex flex-col items-center">
