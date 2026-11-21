@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <script src="https://cdn.tailwindcss.com"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <style>
@@ -106,15 +106,15 @@
                             </div>
                             <div>
                                 <h4 class="text-white font-bold uppercase text-sm mb-1">Email Transmission</h4>
-                                <p class="text-gray-400 text-xs">krbai@event.pens.ac.id</p>
-                                <p class="text-gray-500 text-[10px] mt-0.5">Respon dalam 1x24 jam kerja.</p>
+                                <p class="text-gray-400 text-sm">krbai@event.pens.ac.id</p>
+                                <p class="text-gray-500 text-xs mt-0.5">Respon dalam 1x24 jam kerja.</p>
                             </div>
                         </div>
 
                         <div class="flex items-center gap-4 mt-8 justify-center md:justify-start">
                              <a href="https://www.instagram.com/emosver.team/" class="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:text-white hover:bg-cyan-600 hover:border-cyan-600 transition"><i class="fa-brands fa-instagram"></i></a>
                              <a href="https://linkedin.com/company/emosver" class="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:text-white hover:bg-blue-600 hover:border-blue-600 transition"><i class="fa-brands fa-linkedin-in"></i></a>
-                             <a href="#" class="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:text-white hover:bg-red-600 hover:border-red-600 transition"><i class="fa-brands fa-youtube"></i></a>
+                             <a href="https://www.youtube.com/@emosver" target="_blank" rel="noopener noreferrer" aria-label="YouTube EMOSVER" class="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:text-white hover:bg-red-600 hover:border-red-600 transition"><i class="fa-brands fa-youtube"></i></a>
                         </div>
                     </div>
                 </div>
@@ -132,8 +132,24 @@
                             @csrf 
                             
                             @if(session('success'))
-                                <div class="bg-green-500/20 border border-green-500 text-green-400 p-3 rounded text-xs">
+                                <div role="status" class="bg-green-500/20 border border-green-500 text-green-400 p-3 rounded text-xs">
                                     {{ session('success') }}
+                                </div>
+                            @endif
+
+                            @if(session('error'))
+                                <div role="alert" class="bg-red-500/20 border border-red-500 text-red-300 p-3 rounded text-xs">
+                                    {{ session('error') }}
+                                </div>
+                            @endif
+
+                            @if($errors->any())
+                                <div role="alert" class="bg-red-500/20 border border-red-500 text-red-300 p-3 rounded text-xs">
+                                    <ul class="list-disc list-inside space-y-1">
+                                        @foreach($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
                                 </div>
                             @endif
 
@@ -150,7 +166,7 @@
 
                             <div class="space-y-1">
                                 <label class="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Subject</label>
-                                <select name="subject" class="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-gray-200 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition text-sm cursor-pointer">
+                                <select name="subject" required class="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-gray-200 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition text-sm cursor-pointer">
                                     <option value="" disabled selected>Pilih Keperluan...</option>
                                     <option value="Sponsorship & Partnership">Sponsorship & Partnership</option>
                                     <option value="Kunjungan Lab">Kunjungan Lab / Studi Banding</option>

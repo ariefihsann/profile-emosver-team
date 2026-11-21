@@ -1,4 +1,4 @@
-<div id="page-loader" class="fixed inset-0 z-[9999] flex items-center justify-center bg-black transition-all duration-700 ease-in-out">
+<div id="page-loader" class="fixed inset-0 z-[9999] flex items-center justify-center bg-black transition-all duration-300 ease-in-out" aria-hidden="true">
     <div class="absolute inset-0 bg-black/80 backdrop-blur-2xl"></div>
     
     <div class="relative flex items-center justify-center">
@@ -52,7 +52,7 @@
         
         <div class="bg-black/95 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden p-6 shadow-2xl">
             <ul class="flex flex-col gap-3 text-center">
-                @foreach([['route'=>'home','label'=>'Home'], ['route'=>'about','label'=>'About Team'], ['route'=>'gallery','label'=>'Gallery'], ['route'=>'tech','label'=>'Tech Specs']] as $item)
+                @foreach([['route'=>'home','label'=>'Home'], ['route'=>'about','label'=>'About Team'], ['route'=>'gallery','label'=>'Gallery'], ['route'=>'tech','label'=>'Contact']] as $item)
                 <li>
                     <a href="{{ route($item['route']) }}" class="block py-3 text-sm font-bold tracking-widest uppercase rounded-xl transition-all duration-300 {{ Route::is($item['route']) ? 'text-black bg-cyan-400 shadow-[0_0_15px_#22d3ee]' : 'text-gray-300 hover:text-white hover:bg-white/10' }}">
                         {{ $item['label'] }}

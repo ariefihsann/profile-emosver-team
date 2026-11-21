@@ -52,7 +52,7 @@
         
         <!-- Background Bersih Tanpa Class GPU -->
         <div class="absolute inset-0 bg-cover bg-center pointer-events-none" 
-             style="background-image: url('https://www.pens.ac.id/wp-content/uploads/2024/07/WEB-KRI-DAY-1-1-1080x675.jpg');">
+             style="background-image: url('{{ asset('img/teamm.webp') }}');">
             <div class="absolute inset-0 bg-black/90 backdrop-blur-sm"></div> 
         </div>
 
@@ -71,7 +71,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-7xl mx-auto mb-32 items-center">
                 
                 <div class="relative h-[400px] rounded-2xl overflow-hidden border border-white/20 group shadow-2xl">
-                    <img src="{{ asset('img/team.jpg') }}" loading="lazy" decoding="async" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-700 transform group-hover:scale-105">
+                    <img src="{{ asset('img/team.webp') }}" alt="Foto tim EMOSVER PENS" width="900" height="1200" loading="lazy" decoding="async" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-700 transform group-hover:scale-105">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent pointer-events-none"></div>
                     <div class="absolute bottom-8 left-8">
                         <h3 class="font-tech text-2xl mb-1">The Deep Vision</h3>
@@ -116,7 +116,7 @@
                     <div class="w-full sm:w-[300px] glass-panel p-8 rounded-3xl text-center hover:-translate-y-3 transition duration-500 group">
                             <div class="w-32 h-32 rounded-full p-1 border-2 border-cyan-500 mx-auto mb-6 relative">
                                 <div class="w-full h-full rounded-full overflow-hidden relative">
-                                    <img src="{{ asset('img/team/ryan.jpg') }}" loading="lazy" decoding="async"
+                                    <img src="{{ asset('img/team/ryan.webp') }}" alt="Ryan Putra Nurmawan, ketua tim EMOSVER" width="700" height="525" loading="lazy" decoding="async"
                                         class="w-full h-full object-cover transition duration-500 
                                                 scale-150 object-bottom 
                                                 grayscale group-hover:grayscale-0 group-hover:scale-175">
@@ -131,7 +131,7 @@
                     <div class="w-full sm:w-[300px] glass-panel p-8 rounded-3xl text-center hover:-translate-y-3 transition duration-500 group">
                             <div class="w-32 h-32 rounded-full p-1 border-2 border-cyan-500 mx-auto mb-6 relative">
                                 <div class="w-full h-full rounded-full overflow-hidden relative">
-                                    <img src="{{ asset('img/team/zahra.jpg') }}" loading="lazy" decoding="async"
+                                    <img src="{{ asset('img/team/zahra.webp') }}" alt="Azzahra Pramagda R, divisi Software & AI" width="700" height="525" loading="lazy" decoding="async"
                                     class="w-full h-full object-cover transition duration-500 
                                                         scale-[1.8] object-bottom -translate-x-1 -translate-y-5 
                                                         grayscale group-hover:grayscale-0 group-hover:scale-[2.0]">
@@ -146,7 +146,7 @@
                     <div class="w-full sm:w-[300px] glass-panel p-8 rounded-3xl text-center hover:-translate-y-3 transition duration-500 group">
                         <div class="w-32 h-32 rounded-full p-1 border-2 border-cyan-500 mx-auto mb-6 relative">
                                 <div class="w-full h-full rounded-full overflow-hidden relative">
-                                    <img src="{{ asset('img/team/rifqi.jpg') }}" loading="lazy" decoding="async"
+                                    <img src="{{ asset('img/team/rifqi.webp') }}" alt="Ahmad Rifki Ferdian, divisi struktur mekanik" width="700" height="525" loading="lazy" decoding="async"
                                     class="w-full h-full object-cover transition duration-500 
                                                         scale-[1.8] object-bottom -translate-x-1 -translate-y-3 
                                                         grayscale group-hover:grayscale-0 group-hover:scale-[2.0]">
@@ -161,7 +161,7 @@
                     <div class="w-full sm:w-[300px] glass-panel p-8 rounded-3xl text-center hover:-translate-y-3 transition duration-500 group">
                              <div class="w-32 h-32 rounded-full p-1 border-2 border-cyan-500 mx-auto mb-6 relative">
                                 <div class="w-full h-full rounded-full overflow-hidden relative">
-                                    <img src="{{ asset('img/team/awang.jpg') }}" loading="lazy" decoding="async"
+                                    <img src="{{ asset('img/team/awang.webp') }}" alt="Gumawang Sasongko, divisi struktur mekanik" width="700" height="525" loading="lazy" decoding="async"
                                     class="w-full h-full object-cover transition duration-500 
                                                         scale-[1.8] object-bottom -translate-x-1 -translate-y-3 
                                                         grayscale group-hover:grayscale-0 group-hover:scale-[2.0]">
@@ -176,7 +176,7 @@
                     <div class="w-full sm:w-[300px] glass-panel p-8 rounded-3xl text-center hover:-translate-y-3 transition duration-500 group">
                         <div class="w-32 h-32 rounded-full p-1 border-2 border-cyan-500 mx-auto mb-6 relative">
                                 <div class="w-full h-full rounded-full overflow-hidden relative">
-                                    <img src="{{ asset('img/team/raka.jpg') }}" loading="lazy" decoding="async"
+                                    <img src="{{ asset('img/team/raka.webp') }}" alt="Rakha Hanif Lutfirrahman, divisi elektronika" width="700" height="525" loading="lazy" decoding="async"
                                     class="w-full h-full object-cover transition duration-500 
                                                         scale-[1.8] object-bottom -translate-x-0 -translate-y-3 
                                                         grayscale group-hover:grayscale-0 group-hover:scale-[2.0]">
@@ -191,7 +191,7 @@
                     <div class="w-full sm:w-[300px] glass-panel p-8 rounded-3xl text-center hover:-translate-y-3 transition duration-500 group">
                             <div class="w-32 h-32 rounded-full p-1 border-2 border-cyan-500 mx-auto mb-6 relative">
                                 <div class="w-full h-full rounded-full overflow-hidden relative">
-                                        <img src="{{ asset('img/team/arif.jpg') }}" loading="lazy" decoding="async"
+                                        <img src="{{ asset('img/team/arif.webp') }}" alt="Arif Muhammad Ihsan Marbun, project manager" width="700" height="468" loading="lazy" decoding="async"
                                             class="w-full h-full object-cover transition duration-500 
                                                     scale-125 translate-x-0  object-center 
                                                     grayscale group-hover:grayscale-0 group-hover:scale-150">
@@ -213,7 +213,7 @@
                     
                         <div class="glass-panel p-6 rounded-2xl flex items-center gap-6 mb-6 hover:bg-white/5 transition duration-300">
                             <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-cyan-500/30 shrink-0">
-                                <img src="{{ asset('img/team/pakadit.jpg') }}" loading="lazy" decoding="async" class="w-full h-full  object-cover translate-y-1">
+                                <img src="{{ asset('img/team/pakadit.webp') }}" alt="Adytia Darmawan, pembimbing tim" width="120" height="180" loading="lazy" decoding="async" class="w-full h-full  object-cover translate-y-1">
                             </div>
                             <div>
                                 <h4 class="font-bold text-lg">ADYTIA DARMAWAN, S.ST., M.T.</h4>
@@ -224,7 +224,7 @@
 
                         <div class="glass-panel p-6 rounded-2xl flex items-center gap-6 mb-6 hover:bg-white/5 transition duration-300">
                             <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-cyan-500/30 shrink-0">
-                                <img src="{{ asset('img/team/pakluqy.jpg') }}" loading="lazy" decoding="async" class="w-full h-full  object-cover translate-y-1">
+                                <img src="{{ asset('img/team/pakluqy.webp') }}" alt="Lucky Pradigta, pembimbing tim" width="400" height="600" loading="lazy" decoding="async" class="w-full h-full  object-cover translate-y-1">
                             </div>
                             <div>
                                 <h4 class="font-bold text-lg">LUCKY PRADIGTA S.R., S.ST., M.T.</h4>
@@ -266,13 +266,13 @@
             <div class="text-center border-t border-white/10 pt-12 mt-12 pb-12">
                 <p class="text-gray-500 text-xs uppercase tracking-widest mb-6">Connect With Us</p>
                 <div class="flex justify-center gap-6 mb-8">
-                    <a href="https://www.instagram.com/emosver.team/" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black hover:-translate-y-1 transition duration-300">
+                    <a href="https://www.instagram.com/emosver.team/" target="_blank" rel="noopener noreferrer" aria-label="Instagram EMOSVER" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black hover:-translate-y-1 transition duration-300">
                         <i class="fa-brands fa-instagram text-xl"></i>
                     </a>
-                    <a href="https://linkedin.com/company/emosver" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black hover:-translate-y-1 transition duration-300">
+                    <a href="https://linkedin.com/company/emosver" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn EMOSVER" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black hover:-translate-y-1 transition duration-300">
                         <i class="fa-brands fa-linkedin-in text-xl"></i>
                     </a>
-                    <a href="https://www.youtube.com/@emosver" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black hover:-translate-y-1 transition duration-300">
+                    <a href="https://www.youtube.com/@emosver" target="_blank" rel="noopener noreferrer" aria-label="YouTube EMOSVER" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black hover:-translate-y-1 transition duration-300">
                         <i class="fa-brands fa-youtube text-xl"></i>
                     </a>
                 </div>

@@ -1,59 +1,118 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# EMOSVER — PENS Underwater Robotics
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Website profil tim **EMOSVER**, divisi robot bawah air (AUV/ROV) Politeknik Elektronika Negeri
+Surabaya. Situs menampilkan profil tim, capaian kompetisi, galeri kegiatan, dan formulir kontak
+untuk sponsorship maupun kolaborasi riset.
 
-## About Laravel
+- **Production:** https://krbai.pens.ac.id
+- **Stack:** Laravel 12 · Blade · Tailwind CSS 4 · Vite 7 · Alpine.js
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Halaman
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+| Route | View | Isi |
+| --- | --- | --- |
+| `/` | `welcome` | Hero, capaian, liputan berita, mitra |
+| `/about` | `about` | Profil tim, filosofi, anggota, pembimbing |
+| `/gallery` | `gallery` | Slider, grid foto, aftermovie |
+| `/contact` | `tech` | Info kontak, formulir, peta |
+| `POST /contact/send` | — | Kirim pesan ke `krbai@event.pens.ac.id` |
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Menjalankan secara lokal
 
-## Learning Laravel
+Prasyarat: PHP 8.2+, Composer, Node.js 20+.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+```bash
+composer install
+npm install
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+cp .env.example .env
+php artisan key:generate
 
-## Laravel Sponsors
+touch database/database.sqlite
+php artisan migrate
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+npm run build        # aset produksi
+php artisan serve    # http://127.0.0.1:8000
+```
 
-### Premium Partners
+Untuk pengembangan frontend dengan hot reload, jalankan `npm run dev` di terminal terpisah.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## Konfigurasi
 
-## Contributing
+Semua konfigurasi ada di `.env`. Yang perlu diperhatikan:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```env
+APP_NAME=EMOSVER
+APP_URL=https://krbai.pens.ac.id
 
-## Code of Conduct
+# Formulir kontak memerlukan mailer sungguhan di production
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.example.com
+MAIL_PORT=587
+MAIL_USERNAME=
+MAIL_PASSWORD=
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=no-reply@krbai.pens.ac.id
+MAIL_FROM_NAME="EMOSVER Website"
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Dengan `MAIL_MAILER=log`, pesan hanya ditulis ke `storage/logs/laravel.log` dan tidak terkirim.
 
-## Security Vulnerabilities
+## Aset
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- Gambar disimpan di `public/img` dalam format **WebP**. Ukuran maksimal sisi terpanjang 1400px.
+- Foto anggota tim ada di `public/img/team`.
+- Video aftermovie: `public/video/aftermovie-720p.mp4` (720p, faststart) dengan poster
+  `public/img/aftermovie-poster.webp`.
+- Aset yang dibangun Vite berada di `public/build` dan **tidak** di-commit.
 
-## License
+Saat menambah gambar baru, konversi dulu ke WebP dan sertakan `alt`, `width`, `height`, serta
+`loading="lazy"` pada tag `<img>`.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Test
+
+```bash
+php artisan test
+```
+
+Mencakup keterjangkauan setiap halaman, konsistensi label navigasi, tidak adanya aset yang hilang,
+serta validasi dan penanganan kegagalan formulir kontak.
+
+## Deployment
+
+Push ke `main` memicu `.github/workflows/main.yml`:
+
+1. `composer install` + `npm ci`
+2. `php artisan test`
+3. `npm run build`
+4. Upload bundle sebagai artifact
+5. `rsync` ke server (tanpa `.env`, `storage/`, dan `node_modules/`)
+6. Di server: `composer install --no-dev`, `migrate --force`, cache config/route/view, perbaikan permission
+7. Smoke test `https://krbai.pens.ac.id/` dan `/gallery`
+
+Secret yang dibutuhkan:
+
+| Secret | Wajib | Keterangan |
+| --- | --- | --- |
+| `SSH_PRIVATE_KEY` | ya | Private key untuk login ke server |
+| `DEPLOY_USER` | tidak | Default `root`; sangat disarankan user deploy khusus |
+| `KNOWN_HOSTS` | tidak | Isi untuk mem-pin host key; jika kosong memakai `ssh-keyscan` |
+
+`vendor/` dan `public/build/` tidak di-commit, sehingga dependency dan aset selalu dibangun
+ulang pada setiap deployment.
+
+## Struktur direktori
+
+```text
+app/Http/Controllers/ContactController.php   # pengiriman formulir kontak
+resources/views/                             # halaman Blade
+resources/views/components/navbar.blade.php  # navigasi + loader
+resources/css/app.css                        # entry Tailwind
+routes/web.php                               # seluruh route
+public/img, public/video                     # aset statis
+tests/Feature                                # test halaman dan kontak
+```
+
+## Lisensi
+
+Kode aplikasi memakai lisensi MIT. Logo, foto, dan video merupakan milik tim EMOSVER PENS.

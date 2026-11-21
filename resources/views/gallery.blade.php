@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <script src="https://cdn.tailwindcss.com"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <style>
@@ -56,7 +56,7 @@
         @include('components.navbar')
         
         <div class="absolute inset-0 bg-cover bg-center" 
-             style="background-image: url('https://www.pens.ac.id/wp-content/uploads/2024/07/WEB-KRI-DAY-1-1-1080x675.jpg');">
+             style="background-image: url('{{ asset('img/teamm.webp') }}');">
             <div class="absolute inset-0 bg-black/90 backdrop-blur-sm"></div>
         </div>
 
@@ -72,9 +72,9 @@
             <div x-data="{ 
                     current: 0, 
                     slides: [
-                        { img: 'img/awarding.jpg', title: 'KRBAI 2024 FINALS', desc: 'Momen kemenangan tim di tingkat nasional.' },
-                        { img: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2070', title: 'LAB DEVELOPMENT', desc: 'Proses perakitan sensor dan kalibrasi sistem.' },
-                        { img: 'img/testingg.jpg', title: 'POOL TESTING', desc: 'Uji coba manuver otonom di kolam renang.' }
+                        { img: '{{ asset('img/awarding.webp') }}', title: 'KRBAI 2024 FINALS', desc: 'Momen kemenangan tim di tingkat nasional.' },
+                        { img: '{{ asset('img/dev.webp') }}', title: 'LAB DEVELOPMENT', desc: 'Proses perakitan sensor dan kalibrasi sistem.' },
+                        { img: '{{ asset('img/testingg.webp') }}', title: 'POOL TESTING', desc: 'Uji coba manuver otonom di kolam renang.' }
                     ],
                     next() { this.current = (this.current === this.slides.length - 1) ? 0 : this.current + 1 },
                     prev() { this.current = (this.current === 0) ? this.slides.length - 1 : this.current - 1 },
@@ -113,8 +113,8 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     
-                    <div x-show="activeTab === 'all' || activeTab === 'competition'" class="relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer group/img border border-white/10" @click="openModal('{{ asset('img/competition.jpg') }}', 'KRBAI 2023 Finals')">
-                        <img src="{{ asset('img/competition.jpg') }}" class="w-full h-full object-cover transition duration-700 group-hover/img:scale-110">
+                    <div x-show="activeTab === 'all' || activeTab === 'competition'" class="relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer group/img border border-white/10" @click="openModal('{{ asset('img/competition.webp') }}', 'KRBAI 2023 Finals')">
+                        <img src="{{ asset('img/competition.webp') }}" alt="Tim EMOSVER pada final KRBAI 2023" width="1200" height="900" loading="lazy" decoding="async" class="w-full h-full object-cover transition duration-700 group-hover/img:scale-110">
                         <div class="absolute inset-0 bg-black/60 opacity-0 group-hover/img:opacity-100 transition duration-300 flex items-center justify-center">
                             <i class="fa-solid fa-expand text-white text-3xl"></i>
                         </div>
@@ -123,8 +123,8 @@
                         </div>
                     </div>
 
-                    <div x-show="activeTab === 'all' || activeTab === 'dev'" class="relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer group/img border border-white/10" @click="openModal('{{ asset('img/dev.jpg') }}', 'Preparing for Assembly')">
-                        <img src="{{ asset('img/dev.jpg') }}" class="w-full h-full object-cover transition duration-700 group-hover/img:scale-110">
+                    <div x-show="activeTab === 'all' || activeTab === 'dev'" class="relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer group/img border border-white/10" @click="openModal('{{ asset('img/dev.webp') }}', 'Preparing for Assembly')">
+                        <img src="{{ asset('img/dev.webp') }}" alt="Proses perakitan dan kalibrasi robot bawah air" width="1200" height="800" loading="lazy" decoding="async" class="w-full h-full object-cover transition duration-700 group-hover/img:scale-110">
                         <div class="absolute inset-0 bg-black/60 opacity-0 group-hover/img:opacity-100 transition duration-300 flex items-center justify-center">
                             <i class="fa-solid fa-expand text-white text-3xl"></i>
                         </div>
@@ -133,8 +133,8 @@
                         </div>
                     </div>
 
-                    <div x-show="activeTab === 'all' || activeTab === 'team'" class="relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer group/img border border-white/10" @click="openModal('{{ asset ('img/fun.jpg') }}', 'Team Briefing')">
-                        <img src="{{ asset('img/fun.jpg')}}" class="w-full h-full object-cover transition duration-700 group-hover/img:scale-110">
+                    <div x-show="activeTab === 'all' || activeTab === 'team'" class="relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer group/img border border-white/10" @click="openModal('{{ asset('img/fun.webp') }}', 'Team Briefing')">
+                        <img src="{{ asset('img/fun.webp') }}" alt="Sesi briefing tim EMOSVER" width="1200" height="900" loading="lazy" decoding="async" class="w-full h-full object-cover transition duration-700 group-hover/img:scale-110">
                         <div class="absolute inset-0 bg-black/60 opacity-0 group-hover/img:opacity-100 transition duration-300 flex items-center justify-center">
                             <i class="fa-solid fa-expand text-white text-3xl"></i>
                         </div>
@@ -143,8 +143,8 @@
                         </div>
                     </div>
                     
-                    <div x-show="activeTab === 'all' || activeTab === 'dev'" class="relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer group/img border border-white/10" @click="openModal('{{ asset('img/solder.png') }}', 'Soldering PCB')">
-                        <img src="{{ asset('img/solder.png') }}" class="w-full h-full object-cover transition duration-700 group-hover/img:scale-110">
+                    <div x-show="activeTab === 'all' || activeTab === 'dev'" class="relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer group/img border border-white/10" @click="openModal('{{ asset('img/solder.webp') }}', 'Soldering PCB')">
+                        <img src="{{ asset('img/solder.webp') }}" alt="Penyolderan PCB sistem kontrol robot" width="1200" height="571" loading="lazy" decoding="async" class="w-full h-full object-cover transition duration-700 group-hover/img:scale-110">
                         <div class="absolute inset-0 bg-black/60 opacity-0 group-hover/img:opacity-100 transition duration-300 flex items-center justify-center">
                             <i class="fa-solid fa-expand text-white text-3xl"></i>
                         </div>
@@ -153,8 +153,8 @@
                         </div>
                     </div>
 
-                     <div x-show="activeTab === 'all' || activeTab === 'competition'" class="relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer group/img border border-white/10" @click="openModal('{{ asset('img/teamm.jpeg') }}', 'Pool Arena')">
-                        <img src="{{ asset('img/teamm.jpeg') }}" class="w-full h-full object-cover transition duration-700 group-hover/img:scale-110">
+                     <div x-show="activeTab === 'all' || activeTab === 'competition'" class="relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer group/img border border-white/10" @click="openModal('{{ asset('img/teamm.webp') }}', 'Pool Arena')">
+                        <img src="{{ asset('img/teamm.webp') }}" alt="Tim EMOSVER di area kolam pengujian" width="1200" height="675" loading="lazy" decoding="async" class="w-full h-full object-cover transition duration-700 group-hover/img:scale-110">
                         <div class="absolute inset-0 bg-black/60 opacity-0 group-hover/img:opacity-100 transition duration-300 flex items-center justify-center">
                             <i class="fa-solid fa-expand text-white text-3xl"></i>
                         </div>
@@ -163,8 +163,8 @@
                         </div>
                     </div>
 
-                     <div x-show="activeTab === 'all' || activeTab === 'team'" class="relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer group/img border border-white/10" @click="openModal('{{ asset('img/after.jpeg') }}', 'After Competition')">
-                        <img src="{{ asset('img/after.jpeg') }}" class="w-full h-full object-cover transition duration-700 group-hover/img:scale-110">
+                     <div x-show="activeTab === 'all' || activeTab === 'team'" class="relative aspect-[4/3] rounded-2xl overflow-hidden cursor-pointer group/img border border-white/10" @click="openModal('{{ asset('img/after.webp') }}', 'After Competition')">
+                        <img src="{{ asset('img/after.webp') }}" alt="Foto bersama tim setelah kompetisi" width="1200" height="675" loading="lazy" decoding="async" class="w-full h-full object-cover transition duration-700 group-hover/img:scale-110">
                         <div class="absolute inset-0 bg-black/60 opacity-0 group-hover/img:opacity-100 transition duration-300 flex items-center justify-center">
                             <i class="fa-solid fa-expand text-white text-3xl"></i>
                         </div>
@@ -188,7 +188,7 @@
                          class="absolute inset-0 z-20 flex items-center justify-center cursor-pointer"
                          @click="isPlaying = true; $nextTick(() => $refs.player.play())">
                         
-                        <img src="{{ asset('img/gallery/gallery-4.jpg') }}" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover/video:opacity-50 transition duration-500">
+                        <img src="{{ asset('img/aftermovie-poster.webp') }}" alt="Poster aftermovie KRBAI 2024" width="1280" height="720" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover/video:opacity-50 transition duration-500">
                         
                         <div class="w-20 h-20 rounded-full border-2 border-white flex items-center justify-center pl-1 bg-white/10 backdrop-blur-sm group-hover/video:bg-cyan-500 group-hover/video:border-cyan-500 group-hover/video:text-black text-white transition duration-300 transform group-hover/video:scale-110 z-10 shadow-[0_0_30px_rgba(0,0,0,0.5)]">
                             <i class="fa-solid fa-play text-3xl"></i>
@@ -197,11 +197,13 @@
                         <p class="absolute bottom-6 text-white font-tech tracking-widest uppercase text-sm drop-shadow-md">KRBAI 2024 - Aftermovie</p>
                     </div>
 
-                    <video x-ref="player" 
+                    <video x-ref="player"
                            x-show="isPlaying"
-                           class="w-full h-full object-cover" 
+                           class="w-full h-full object-cover"
+                           preload="none"
+                           playsinline
                            controls>
-                        <source src="{{ asset('video/aftermovie.mp4') }}" type="video/mp4">
+                        <source src="{{ asset('video/aftermovie-720p.mp4') }}" type="video/mp4">
                         Browser Anda tidak mendukung tag video.
                     </video>
 
@@ -240,7 +242,7 @@
             </button>
 
             <div @click.outside="modalOpen = false" class="max-w-5xl w-full max-h-[90vh] flex flex-col items-center">
-                <img :src="modalImage" class="max-w-full max-h-[80vh] rounded-lg shadow-[0_0_30px_rgba(34,211,238,0.2)]">
+                <img :src="modalImage" x-show="modalImage" alt="Detail foto gallery EMOSVER" class="max-w-full max-h-[80vh] rounded-lg shadow-[0_0_30px_rgba(34,211,238,0.2)]">
                 <h3 class="text-white font-tech text-xl mt-4 tracking-widest uppercase" x-text="modalTitle"></h3>
             </div>
         </div>

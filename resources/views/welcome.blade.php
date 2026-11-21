@@ -20,7 +20,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <script src="https://cdn.tailwindcss.com"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
     <style>
@@ -96,7 +96,7 @@
                 
                 <!-- Background Image di-setting efficient -->
                 <div class="absolute inset-0 bg-cover bg-center z-0" 
-                     style="background-image: url('{{ asset('img/news2.jpg') }}'); will-change: opacity;">
+                     style="background-image: url('{{ asset('img/news2.webp') }}'); will-change: opacity;">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/80 z-10"></div>
                 </div>
 
@@ -149,7 +149,7 @@
                             <i class="fa-solid fa-trophy text-6xl text-white"></i>
                         </div>
                         <div class="flex items-center gap-3 mb-6">
-                            <span class="text-4xl font-tech font-bold text-cyan-400">24</span>
+                            <span class="text-4xl font-tech font-bold text-cyan-400">2024</span>
                             <span class="bg-cyan-900/40 text-cyan-300 text-[10px] px-2 py-1 rounded border border-cyan-500/30">NATIONAL</span>
                         </div>
                         <h3 class="text-white font-bold text-2xl mb-1">3rd Place</h3>
@@ -162,7 +162,7 @@
                             <i class="fa-solid fa-medal text-6xl text-white"></i>
                         </div>
                         <div class="flex items-center gap-3 mb-6">
-                            <span class="text-4xl font-tech font-bold text-white">24</span>
+                            <span class="text-4xl font-tech font-bold text-white">2024</span>
                             <span class="bg-gray-800 text-gray-300 text-[10px] px-2 py-1 rounded border border-gray-600">REGIONAL</span>
                         </div>
                         <h3 class="text-white font-bold text-2xl mb-1">3rd Place</h3>
@@ -175,7 +175,7 @@
                             <i class="fa-solid fa-trophy text-6xl text-white"></i>
                         </div>
                         <div class="flex items-center gap-3 mb-6">
-                            <span class="text-4xl font-tech font-bold text-cyan-400">23</span>
+                            <span class="text-4xl font-tech font-bold text-cyan-400">2023</span>
                             <span class="bg-cyan-900/40 text-cyan-300 text-[10px] px-2 py-1 rounded border border-cyan-500/30">NATIONAL</span>
                         </div>
                         <h3 class="text-white font-bold text-2xl mb-1">3rd Place</h3>
@@ -188,7 +188,7 @@
                             <i class="fa-solid fa-medal text-6xl text-white"></i>
                         </div>
                         <div class="flex items-center gap-3 mb-6">
-                            <span class="text-4xl font-tech font-bold text-white">23</span>
+                            <span class="text-4xl font-tech font-bold text-white">2023</span>
                             <span class="bg-gray-800 text-gray-300 text-[10px] px-2 py-1 rounded border border-gray-600">REGIONAL</span>
                         </div>
                         <h3 class="text-white font-bold text-2xl mb-1">2nd Place</h3>
@@ -208,7 +208,7 @@
                     <div class="group cursor-pointer">
                         <div class="overflow-hidden rounded-xl mb-4 relative border border-white/10 transform-gpu">
                             <!-- Ditambahkan loading="lazy" dan decoding="async" -->
-                            <img src="{{ asset('img/news.jpg') }}" loading="lazy" decoding="async" class="w-full h-56 object-cover transform-gpu group-hover:scale-110 transition duration-700 grayscale group-hover:grayscale-0">
+                            <img src="{{ asset('img/news.webp') }}" alt="Berita prestasi tim robot PENS" width="900" height="562" loading="lazy" decoding="async" class="w-full h-56 object-cover transform-gpu group-hover:scale-110 transition duration-700 grayscale group-hover:grayscale-0">
                             <div class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-3 py-1 rounded-full">PENS.AC.ID</div>
                         </div>
                         <div class="pl-2">
@@ -222,7 +222,7 @@
 
                     <div class="group cursor-pointer">
                         <div class="overflow-hidden rounded-xl mb-4 relative border border-white/10 transform-gpu">
-                            <img src="{{ asset('img/news1.webp') }}" loading="lazy" decoding="async" class="w-full h-56 object-cover transform-gpu group-hover:scale-110 transition duration-700 grayscale group-hover:grayscale-0">
+                            <img src="{{ asset('img/news1.webp') }}" alt="Berita EMOSVER pada kompetisi robotika" width="900" height="600" loading="lazy" decoding="async" class="w-full h-56 object-cover transform-gpu group-hover:scale-110 transition duration-700 grayscale group-hover:grayscale-0">
                             <div class="absolute top-3 left-3 bg-blue-600 text-white text-[10px] font-bold px-3 py-1 rounded-full">ANTARA JATENG</div>
                         </div>
                         <div class="pl-2">
@@ -236,7 +236,7 @@
 
                     <div class="group cursor-pointer">
                         <div class="overflow-hidden rounded-xl mb-4 relative border border-white/10 transform-gpu">
-                            <img src="{{ asset('img/news2.jpg') }}" loading="lazy" decoding="async" class="w-full h-56 object-cover transform-gpu group-hover:scale-110 transition duration-700 grayscale group-hover:grayscale-0">
+                            <img src="{{ asset('img/news2.webp') }}" alt="Running test robot PENS" width="1080" height="675" loading="lazy" decoding="async" class="w-full h-56 object-cover transform-gpu group-hover:scale-110 transition duration-700 grayscale group-hover:grayscale-0">
                             <div class="absolute top-3 left-3 bg-purple-600 text-white text-[10px] font-bold px-3 py-1 rounded-full">PENS NEWS</div>
                         </div>
                         <div class="pl-2">
@@ -268,20 +268,10 @@
                             <!-- LOGO PERUSAHAAN ASLI -->
                             <div class="group flex flex-col items-center justify-center opacity-70 hover:opacity-100 transition duration-300 cursor-pointer">
                                 <div class="w-64 h-32 rounded-xl flex items-center justify-center transition p-2">
-                                    <img src="{{ asset('img/fugro.png') }}" loading="lazy" decoding="async" alt="Sponsor" class="w-full h-full object-contain scale-150 transform-gpu grayscale group-hover:grayscale-0 transition duration-300">
+                                    <img src="{{ asset('img/fugro.webp') }}" width="600" height="336" loading="lazy" decoding="async" alt="Fugro, official partner EMOSVER" class="w-full h-full object-contain scale-150 transform-gpu grayscale group-hover:grayscale-0 transition duration-300">
                                 </div>
                                 <span class="text-[10px] text-cyan-400 mt-3 uppercase tracking-wider font-bold">Official Partner</span>
                             </div>
-
-                            <!-- SISA SLOT KOSONG -->
-                            @for ($i = 0; $i < 4; $i++)
-                                <div class="group flex flex-col items-center justify-center opacity-40 hover:opacity-100 transition duration-300 cursor-pointer">
-                                    <div class="w-48 h-24 border-2 border-dashed border-gray-700 rounded-xl flex items-center justify-center group-hover:border-cyan-500/50 group-hover:bg-cyan-500/5 transition">
-                                        <span class="text-xl font-bold text-gray-600 font-tech tracking-widest group-hover:text-cyan-400">NONE</span>
-                                    </div>
-                                    <span class="text-[10px] text-gray-600 mt-3 uppercase tracking-wider group-hover:text-cyan-400">Available Slot</span>
-                                </div>
-                            @endfor
                         </div>
 
                         <!-- Baris Kedua (Duplikat) -->
@@ -290,20 +280,10 @@
                             <!-- LOGO PERUSAHAAN ASLI (Duplikat) -->
                             <div class="group flex flex-col items-center justify-center opacity-70 hover:opacity-100 transition duration-300 cursor-pointer">
                                 <div class="w-64 h-32 rounded-xl flex items-center justify-center transition p-2">
-                                    <img src="{{ asset('img/fugro.png') }}" loading="lazy" decoding="async" alt="Sponsor" class="w-full h-full object-contain scale-150 transform-gpu grayscale group-hover:grayscale-0 transition duration-300">
+                                    <img src="{{ asset('img/fugro.webp') }}" width="600" height="336" loading="lazy" decoding="async" alt="Fugro, official partner EMOSVER" class="w-full h-full object-contain scale-150 transform-gpu grayscale group-hover:grayscale-0 transition duration-300">
                                 </div>
                                 <span class="text-[10px] text-cyan-400 mt-3 uppercase tracking-wider font-bold">Official Partner</span>
                             </div>
-
-                            <!-- SISA SLOT KOSONG (Duplikat) -->
-                            @for ($i = 0; $i < 4; $i++)
-                                <div class="group flex flex-col items-center justify-center opacity-40 hover:opacity-100 transition duration-300 cursor-pointer">
-                                    <div class="w-48 h-24 border-2 border-dashed border-gray-700 rounded-xl flex items-center justify-center group-hover:border-cyan-500/50 group-hover:bg-cyan-500/5 transition">
-                                        <span class="text-xl font-bold text-gray-600 font-tech tracking-widest group-hover:text-cyan-400">NONE</span>
-                                    </div>
-                                    <span class="text-[10px] text-gray-600 mt-3 uppercase tracking-wider group-hover:text-cyan-400">Available Slot</span>
-                                </div>
-                            @endfor
                         </div>
                     </div>
                 </div>
@@ -348,10 +328,10 @@
                             <a href="https://instagram.com/emosver.team" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-cyan-500 hover:text-black transform-gpu hover:scale-110 transition">
                                 <i class="fa-brands fa-instagram"></i>
                             </a>
-                            <a href="#" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-cyan-500 hover:text-black transform-gpu hover:scale-110 transition">
+                            <a href="https://www.youtube.com/@emosver" target="_blank" rel="noopener noreferrer" aria-label="YouTube EMOSVER" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-cyan-500 hover:text-black transform-gpu hover:scale-110 transition">
                                 <i class="fa-brands fa-youtube"></i>
                             </a>
-                            <a href="#" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-cyan-500 hover:text-black transform-gpu hover:scale-110 transition">
+                            <a href="https://linkedin.com/company/emosver" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn EMOSVER" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-cyan-500 hover:text-black transform-gpu hover:scale-110 transition">
                                 <i class="fa-brands fa-linkedin-in"></i>
                             </a>
                         </div>

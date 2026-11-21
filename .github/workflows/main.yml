@@ -1,122 +1,148 @@
-﻿name: Deploy ke Server Kampus
+﻿name: Deploy EMOSVER website
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+env:
+  DEPLOY_HOST: krbai.pens.ac.id
+  DEPLOY_PORT: '1821'
+  DEPLOY_PATH: /var/www/laravel
 
 jobs:
-  deploy:
+  test-and-build:
     runs-on: ubuntu-latest
-
     steps:
+      - uses: actions/checkout@v4
 
-      # 1. Ambil source code dari GitHub
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, dom, fileinfo, sqlite3
+          coverage: none
 
-      # 2. Pasang SSH private key
-      - name: Setup SSH Agent
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install PHP dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
+
+      - name: Install frontend dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Run tests
+        run: php artisan test
+
+      - name: Build frontend assets
+        run: npm run build
+
+      - name: Prune dev dependencies for the release
+        run: composer install --no-dev --prefer-dist --no-interaction --no-progress --optimize-autoloader
+
+      - name: Package release
+        run: |
+          mkdir -p release
+          rsync -a ./ release/ \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            --exclude='node_modules/' \
+            --exclude='release/' \
+            --exclude='.env' \
+            --exclude='storage/logs/*' \
+            --exclude='storage/framework/cache/*' \
+            --exclude='storage/framework/sessions/*' \
+            --exclude='storage/framework/views/*' \
+            --exclude='database/database.sqlite'
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: emosver-release
+          path: release
+          retention-days: 7
+
+  deploy:
+    needs: test-and-build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: emosver-release
+          path: release
+
+      - name: Setup SSH agent
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      # 3. Tambahkan server ke known_hosts
-      - name: Add server to known_hosts
+      - name: Configure known hosts
+        env:
+          KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }}
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -p 1821 -H krbai.pens.ac.id >> ~/.ssh/known_hosts
+          chmod 700 ~/.ssh
+          if [ -n "$KNOWN_HOSTS" ]; then
+            printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          else
+            ssh-keyscan -p "$DEPLOY_PORT" -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts
+          fi
 
-      # 4. Upload source code ke server
-      - name: Deploy files with rsync
+      - name: Sync release to server
+        env:
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER || 'root' }}
         run: |
-          rsync -avz \
-            --exclude='.git/' \
+          rsync -az --delete --itemize-changes \
             --exclude='.env' \
-            --exclude='node_modules/' \
-            --exclude='vendor/' \
             --exclude='storage/' \
-            -e "ssh -p 1821" \
-            ./ root@krbai.pens.ac.id:/var/www/laravel/
+            --exclude='public/storage' \
+            -e "ssh -p $DEPLOY_PORT" \
+            release/ "$DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/"
 
-      # 5. Fix permission Laravel
-      - name: Fix Laravel permissions
+      - name: Activate release on server
+        env:
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER || 'root' }}
         run: |
-          ssh -p 1821 root@krbai.pens.ac.id '
-            set -e
+          ssh -p "$DEPLOY_PORT" "$DEPLOY_USER@$DEPLOY_HOST" "DEPLOY_PATH='$DEPLOY_PATH' bash -se" <<'REMOTE'
+          set -Eeuo pipefail
+          cd "$DEPLOY_PATH"
 
-            cd /var/www/laravel
+          test -f .env || { echo "Missing $DEPLOY_PATH/.env" >&2; exit 1; }
+          test -f vendor/autoload.php || { echo "vendor missing from release" >&2; exit 1; }
+          test -f public/build/manifest.json || { echo "built assets missing from release" >&2; exit 1; }
 
-            echo "========================================"
-            echo "       DETECT PHP USER"
-            echo "========================================"
+          mkdir -p storage/framework/{cache,sessions,views} storage/logs bootstrap/cache
 
-            PHP_USER=$(ps -eo user,comm | awk '\''$2 ~ /^php-fpm/ {print $1; exit}'\'')
+          php artisan migrate --force --no-interaction
+          php artisan optimize:clear
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
 
-            if [ -z "$PHP_USER" ]; then
-              echo "PHP-FPM user tidak terdeteksi."
-              echo "Menggunakan www-data."
-              PHP_USER=www-data
-            fi
+          PHP_USER="$(ps -eo user,comm | awk '$2 ~ /^php-fpm/ {print $1; exit}')"
+          PHP_USER="${PHP_USER:-www-data}"
+          echo "php user: $PHP_USER"
+          chown -R "$PHP_USER:$PHP_USER" storage bootstrap/cache
+          chmod -R ug+rwX storage bootstrap/cache
 
-            echo "PHP USER: $PHP_USER"
+          test -w storage/framework/views
+          echo "release activated in $DEPLOY_PATH"
+          REMOTE
 
-            echo ""
-            echo "========================================"
-            echo "       PERMISSION SEBELUM"
-            echo "========================================"
-
-            stat -c "%U:%G %a %n" \
-              storage \
-              storage/framework \
-              storage/framework/views \
-              bootstrap/cache
-
-            echo ""
-            echo "========================================"
-            echo "       FIX PERMISSION"
-            echo "========================================"
-
-            chown -R "$PHP_USER:$PHP_USER" storage bootstrap/cache
-            chmod -R 775 storage bootstrap/cache
-
-            echo ""
-            echo "========================================"
-            echo "       CLEAR LARAVEL CACHE"
-            echo "========================================"
-
-            php artisan optimize:clear
-
-            echo ""
-            echo "========================================"
-            echo "       TEST WRITE STORAGE"
-            echo "========================================"
-
-            TEST_FILE="storage/framework/views/.deploy-test"
-
-            echo "deployment test" > "$TEST_FILE"
-
-            if [ -f "$TEST_FILE" ]; then
-              echo "SUCCESS: storage/framework/views bisa ditulis"
-              rm -f "$TEST_FILE"
-            else
-              echo "ERROR: storage/framework/views TIDAK bisa ditulis"
-              exit 1
-            fi
-
-            echo ""
-            echo "========================================"
-            echo "       PERMISSION SESUDAH"
-            echo "========================================"
-
-            stat -c "%U:%G %a %n" \
-              storage \
-              storage/framework \
-              storage/framework/views \
-              bootstrap/cache
-
-            echo ""
-            echo "========================================"
-            echo "       DEPLOY SELESAI"
-            echo "========================================"
-          '
+      - name: Smoke test production
+        run: |
+          for path in / /about /gallery /contact; do
+            code=$(curl -o /dev/null -s -w '%{http_code}' --max-time 30 "https://krbai.pens.ac.id$path")
+            echo "$path -> $code"
+            test "$code" = "200"
+          done
